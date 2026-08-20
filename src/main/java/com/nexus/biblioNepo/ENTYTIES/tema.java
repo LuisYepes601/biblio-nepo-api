@@ -21,13 +21,12 @@ import java.util.List;
  *
  * @author luis
  */
-@Table(
-        name = "category_book",
+@Table(name = "tema",
         indexes = {
-            @Index(name = "idx_category_book_nombre", columnList = "nombre")
+            @Index(name = "idx_tema_nombre", columnList = "nombre")
         })
 @Entity
-public class categoryBoock extends Auditoria {
+public class tema extends Auditoria {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,27 +35,23 @@ public class categoryBoock extends Auditoria {
     @Column(
             name = "nombre",
             nullable = false,
-            unique = true,
             length = 100)
     private String nombre;
 
     @Column(
-            columnDefinition = "TEXT",
-            length = 200)
+            name = "descripcion",
+            length = 500)
     private String descripcion;
 
-    @OneToMany(mappedBy = "categoryBoock", fetch = FetchType.LAZY)
-    private List<Boock> boocks;
+    @OneToMany(mappedBy = "tema", fetch = FetchType.LAZY)
+    private List<libro_tema> libros;
 
-    public categoryBoock(Integer id, String nombre, String descripcion, List<Boock> boocks, LocalDateTime createAt, LocalDateTime updateAt, LocalDateTime deleteAt, boolean isDelete, String createBy, String creatorName, String updateBy, String updateName, String deleteBy, String deleteName) {
+    public tema(Integer id, String nombre, String descripcion, List<libro_tema> libros, LocalDateTime createAt, LocalDateTime updateAt, LocalDateTime deleteAt, boolean isDelete, String createBy, String creatorName, String updateBy, String updateName, String deleteBy, String deleteName) {
         super(createAt, updateAt, deleteAt, isDelete, createBy, creatorName, updateBy, updateName, deleteBy, deleteName);
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
-        this.boocks = boocks;
-    }
-
-    public categoryBoock() {
+        this.libros = libros;
     }
 
     public Integer getId() {
@@ -83,12 +78,13 @@ public class categoryBoock extends Auditoria {
         this.descripcion = descripcion;
     }
 
-    public List<Boock> getBoocks() {
-        return boocks;
+    public List<libro_tema> getLibros() {
+        return libros;
     }
 
-    public void setBoocks(List<Boock> boocks) {
-        this.boocks = boocks;
+    public void setLibros(List<libro_tema> libros) {
+        this.libros = libros;
     }
-
+    
+    
 }

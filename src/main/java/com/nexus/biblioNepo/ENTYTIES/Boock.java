@@ -74,9 +74,8 @@ public class Boock {
     @ManyToOne(fetch = FetchType.LAZY)
     private formatoLibro formatoLibro;
 
-    @JoinColumn(name = "id_category_boock")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private categoryBoock categoryBoock;
+    @OneToMany(mappedBy = "libro", fetch = FetchType.LAZY)
+    private List<libro_categoria> categorias;
 
     @JoinColumn(name = "id_idioma")
     @ManyToOne(fetch = FetchType.LAZY)
@@ -88,5 +87,21 @@ public class Boock {
     @JoinColumn(name = "id_autor")
     @ManyToOne(fetch = FetchType.LAZY)
     private Autor autor;
+
+    @OneToMany(mappedBy = "libro", fetch = FetchType.LAZY)
+    private List<libro_tema> temas;
+
+    @OneToMany(mappedBy = "libro", fetch = FetchType.LAZY)
+    private List<palabra_clave_libro> palabras_claves;
+
+    @JoinColumn(name = "id_tipo_libro", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    private tipoLibro tipoLibro;
+
+    @OneToMany(mappedBy = "boock", fetch = FetchType.LAZY)
+    private List<libro_favorito> usuarios_favoritos;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "boock")
+    private List<prestamo> prestamos;
 
 }

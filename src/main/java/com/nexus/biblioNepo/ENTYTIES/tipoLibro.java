@@ -11,52 +11,41 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Index;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import java.time.LocalDateTime;
 import java.util.List;
 
 /**
  *
  * @author luis
  */
-@Table(
-        name = "category_book",
-        indexes = {
-            @Index(name = "idx_category_book_nombre", columnList = "nombre")
-        })
+@Table(name = "tipo_libro")
 @Entity
-public class categoryBoock extends Auditoria {
+public class tipoLibro extends Auditoria {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(
-            name = "nombre",
+    @Column(name = "nombre",
             nullable = false,
             unique = true,
             length = 100)
     private String nombre;
 
     @Column(
-            columnDefinition = "TEXT",
+            name = "descripcion",
             length = 200)
     private String descripcion;
 
-    @OneToMany(mappedBy = "categoryBoock", fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "tipoLibro")
     private List<Boock> boocks;
 
-    public categoryBoock(Integer id, String nombre, String descripcion, List<Boock> boocks, LocalDateTime createAt, LocalDateTime updateAt, LocalDateTime deleteAt, boolean isDelete, String createBy, String creatorName, String updateBy, String updateName, String deleteBy, String deleteName) {
-        super(createAt, updateAt, deleteAt, isDelete, createBy, creatorName, updateBy, updateName, deleteBy, deleteName);
+    public tipoLibro(Integer id, String nombre, String descripcion, List<Boock> boocks) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.boocks = boocks;
-    }
-
-    public categoryBoock() {
     }
 
     public Integer getId() {
@@ -90,5 +79,6 @@ public class categoryBoock extends Auditoria {
     public void setBoocks(List<Boock> boocks) {
         this.boocks = boocks;
     }
-
+    
+    
 }

@@ -21,13 +21,12 @@ import java.util.List;
  *
  * @author luis
  */
-@Table(
-        name = "category_book",
+@Table(name = "tipo_identificacion",
         indexes = {
-            @Index(name = "idx_category_book_nombre", columnList = "nombre")
+            @Index(name = "idx_tipo_identificacion_nombre", columnList = "nombre")
         })
 @Entity
-public class categoryBoock extends Auditoria {
+public class tipoidentificacion extends Auditoria {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,27 +35,26 @@ public class categoryBoock extends Auditoria {
     @Column(
             name = "nombre",
             nullable = false,
-            unique = true,
             length = 100)
     private String nombre;
 
     @Column(
-            columnDefinition = "TEXT",
+            name = "descripcion",
             length = 200)
     private String descripcion;
 
-    @OneToMany(mappedBy = "categoryBoock", fetch = FetchType.LAZY)
-    private List<Boock> boocks;
+    @OneToMany(mappedBy = "tipoIdentificacion", fetch = FetchType.LAZY)
+    private List<usuario> usuarios;
 
-    public categoryBoock(Integer id, String nombre, String descripcion, List<Boock> boocks, LocalDateTime createAt, LocalDateTime updateAt, LocalDateTime deleteAt, boolean isDelete, String createBy, String creatorName, String updateBy, String updateName, String deleteBy, String deleteName) {
+    public tipoidentificacion(Integer id, String nombre, String descripcion, List<usuario> usuarios, LocalDateTime createAt, LocalDateTime updateAt, LocalDateTime deleteAt, boolean isDelete, String createBy, String creatorName, String updateBy, String updateName, String deleteBy, String deleteName) {
         super(createAt, updateAt, deleteAt, isDelete, createBy, creatorName, updateBy, updateName, deleteBy, deleteName);
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
-        this.boocks = boocks;
+        this.usuarios = usuarios;
     }
 
-    public categoryBoock() {
+    public tipoidentificacion() {
     }
 
     public Integer getId() {
@@ -83,12 +81,12 @@ public class categoryBoock extends Auditoria {
         this.descripcion = descripcion;
     }
 
-    public List<Boock> getBoocks() {
-        return boocks;
+    public List<usuario> getUsuarios() {
+        return usuarios;
     }
 
-    public void setBoocks(List<Boock> boocks) {
-        this.boocks = boocks;
+    public void setUsuarios(List<usuario> usuarios) {
+        this.usuarios = usuarios;
     }
 
 }
