@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -74,6 +75,22 @@ public class AdminAutorsController {
         return ResponseEntity
                 .ok()
                 .body(new BasicResponseDto("El autor ha sido modificado con exito del sistema"));
+    }
+
+    @Operation(
+            description = "Operación encargada de eliminar un autor del sistema",
+            method = "DELETE")
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<BasicResponseDto> deleteById(
+            @PathVariable(
+                    name = "id",
+                    required = true) Integer id) {
+
+        adminAutorServices.deleteById(id);
+
+        return ResponseEntity
+                .ok()
+                .body(new BasicResponseDto("El autor se ha eliminado correctamente del sistema"));
     }
 
 }

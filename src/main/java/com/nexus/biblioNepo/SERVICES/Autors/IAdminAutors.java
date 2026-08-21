@@ -19,4 +19,6 @@ public interface IAdminAutors {
     public Autor updateAutorByID(Integer id, MultipartFile imgAutor, autorDtoReq dtoReq);
     
     public Autor deleteById(Integer id);
+    
+    
 }
