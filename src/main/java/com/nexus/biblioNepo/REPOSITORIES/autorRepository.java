@@ -5,6 +5,7 @@
 package com.nexus.biblioNepo.REPOSITORIES;
 
 import com.nexus.biblioNepo.DTOS.response.Autors.AutorAdminDtoResp;
+import com.nexus.biblioNepo.DTOS.response.Autors.AutorDetailsAdminDtoResp;
 import com.nexus.biblioNepo.ENTYTIES.Autor;
 import io.lettuce.core.dynamic.annotation.Param;
 import java.util.Optional;
@@ -44,19 +45,41 @@ public interface autorRepository extends JpaRepository<Autor, Integer> {
            LEFT JOIN b.categorias cbti
            LEFT JOIN cbti.categoryBoock cb
            
-           WHERE (:name IS NULL OR a.nombre LIKE CONCAT(LOWER(:name), '%'))
-           AND (:id_pais IS NULL OR p.id = :id)
+           WHERE (:name IS NULL OR a.nombre LIKE CONCAT(LOWER(CAST(:name AS string)), '%'))
+           AND (:id_pais IS NULL OR p.id = :id_pais)
            AND (:is_delete IS NULL OR p.isDelete = :is_delete)
            AND (:name_boock IS NULL OR b.titulo = :name_boock)
            AND (:id_categoria_boock IS NULL OR  cb.id = :id_categoria_boock)
+           AND (:name IS NULL OR a.name <> :name)
            
            """)
     public Page<AutorAdminDtoResp> getAllAutorsAdmin(
             @Param(value = "name") String name,
             @Param(value = "id_pais") Integer id_pais,
-            @Param(value = "is_delete") Boolean id_delete,
+            @Param(value = "is_delete") Boolean is_delete,
             @Param(value = "name_boock") String name_boock,
             @Param(value = "id_categoria_boock") Integer id_categoria_boock,
             Pageable pageable);
 
+    @Query("""
+           SELECT NEW com.nexus.biblioNepo.DTOS.response.Autors.AutorDetailsAdminDtoResp(
+           a.fechaNacimiento,
+           a.fechaFallecimiento,
+           a.publicIdUrlFoto,
+           a.urlFoto,
+           a.createAt,
+           a.createBy,
+           a.creatorName,
+           a.updateAt,
+           a.updateBy,
+           a.updateName,
+           a.deleteAt,
+           a.deleteBy,
+           a.deleteName
+           )
+           
+           FROM Autor a
+           WHERE a.id = :id
+           """)
+    public Optional<AutorDetailsAdminDtoResp> getDetailsById(@Param(value = "id") Integer id);
 }

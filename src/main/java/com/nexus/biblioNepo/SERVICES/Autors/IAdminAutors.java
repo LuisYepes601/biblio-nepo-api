@@ -6,6 +6,7 @@ package com.nexus.biblioNepo.SERVICES;
 
 import com.nexus.biblioNepo.DTOS.request.autorDtoReq;
 import com.nexus.biblioNepo.DTOS.response.Autors.AutorAdminDtoResp;
+import com.nexus.biblioNepo.DTOS.response.Autors.AutorDetailsAdminDtoResp;
 import com.nexus.biblioNepo.DTOS.response.PageResponse;
 import com.nexus.biblioNepo.ENTYTIES.Autor;
 import io.lettuce.core.dynamic.annotation.Param;
@@ -31,4 +32,6 @@ public interface IAdminAutors {
             String name_boock,
             Integer id_categoria_boock,
             Pageable pageable);
+    
+    public AutorDetailsAdminDtoResp getDetailAdmin(Integer id);
 }

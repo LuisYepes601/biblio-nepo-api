@@ -6,6 +6,7 @@ package com.nexus.biblioNepo.SERVICES.Autors;
 
 import com.nexus.biblioNepo.DTOS.request.autorDtoReq;
 import com.nexus.biblioNepo.DTOS.response.Autors.AutorAdminDtoResp;
+import com.nexus.biblioNepo.DTOS.response.Autors.AutorDetailsAdminDtoResp;
 import com.nexus.biblioNepo.DTOS.response.Cloudinary.CloudinaryUploadResponse;
 import com.nexus.biblioNepo.DTOS.response.PageResponse;
 import com.nexus.biblioNepo.ENTYTIES.Autor;
@@ -176,6 +177,17 @@ public class AdminAutorsService implements IAdminAutors {
         }
 
         return PageResponseUtils.CreatePageReponse(page);
+
+    }
+
+    @Cacheable(value = "autor-detail-admin", key = "#id")
+    @Transactional(readOnly = true)
+    @Override
+    public AutorDetailsAdminDtoResp getDetailAdmin(Integer id) {
+
+        return autorRepo.getDetailsById(id)
+                .orElseThrow(() 
+                        -> new DatoNoExistenteEcxeption("El autor no tiene detalles o no existe en el sistema"));
 
     }
 

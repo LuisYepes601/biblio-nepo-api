@@ -6,6 +6,7 @@ package com.nexus.biblioNepo.CONTROLLERS.Autors;
 
 import com.nexus.biblioNepo.DTOS.request.autorDtoReq;
 import com.nexus.biblioNepo.DTOS.response.Autors.AutorAdminDtoResp;
+import com.nexus.biblioNepo.DTOS.response.Autors.AutorDetailsAdminDtoResp;
 import com.nexus.biblioNepo.DTOS.response.PageResponse;
 import com.nexus.biblioNepo.SERVICES.IAdminAutors;
 import io.swagger.v3.oas.annotations.Operation;
@@ -125,4 +126,18 @@ public class AdminAutorsController {
                         name, idPais, isDelete, nameBook, idCategoriaBook, pageable));
     }
 
+    @Operation(
+            description = "Operación encargada de mostrar detalles de un autor",
+            method = "GET")
+    @GetMapping(value = "/{id}/details")
+    public ResponseEntity<AutorDetailsAdminDtoResp> getDetailsById(
+            @PathVariable(
+                    name = "id",
+                    required = true) Integer id) {
+
+        return ResponseEntity
+                .ok()
+                .body(adminAutorServices.getDetailAdmin(id));
+
+    }
 }
