@@ -46,15 +46,7 @@ public class categoryBoock extends Auditoria {
     private String descripcion;
 
     @OneToMany(mappedBy = "categoryBoock", fetch = FetchType.LAZY)
-    private List<Boock> boocks;
-
-    public categoryBoock(Integer id, String nombre, String descripcion, List<Boock> boocks, LocalDateTime createAt, LocalDateTime updateAt, LocalDateTime deleteAt, boolean isDelete, String createBy, String creatorName, String updateBy, String updateName, String deleteBy, String deleteName) {
-        super(createAt, updateAt, deleteAt, isDelete, createBy, creatorName, updateBy, updateName, deleteBy, deleteName);
-        this.id = id;
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.boocks = boocks;
-    }
+    private List<libro_categoria> boocks;
 
     public categoryBoock() {
     }
@@ -83,11 +75,11 @@ public class categoryBoock extends Auditoria {
         this.descripcion = descripcion;
     }
 
-    public List<Boock> getBoocks() {
+    public List<libro_categoria> getBoocks() {
         return boocks;
     }
 
-    public void setBoocks(List<Boock> boocks) {
+    public void setBoocks(List<libro_categoria> boocks) {
         this.boocks = boocks;
     }
 

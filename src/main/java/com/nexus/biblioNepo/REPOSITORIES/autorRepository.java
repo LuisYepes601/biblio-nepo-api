@@ -5,6 +5,7 @@
 package com.nexus.biblioNepo.REPOSITORIES;
 
 import com.nexus.biblioNepo.ENTYTIES.Autor;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,4 +16,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface autorRepository extends JpaRepository<Autor, Integer> {
 
+    
 }
