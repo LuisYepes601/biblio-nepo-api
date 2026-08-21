@@ -5,19 +5,26 @@
 package com.nexus.biblioNepo.SERVICES.Autors;
 
 import com.nexus.biblioNepo.DTOS.request.autorDtoReq;
+import com.nexus.biblioNepo.DTOS.response.Autors.AutorAdminDtoResp;
 import com.nexus.biblioNepo.DTOS.response.Cloudinary.CloudinaryUploadResponse;
+import com.nexus.biblioNepo.DTOS.response.PageResponse;
 import com.nexus.biblioNepo.ENTYTIES.Autor;
 import com.nexus.biblioNepo.GLOBALEXCEPTIONHANDLER.exceptions.DatoNoExistenteEcxeption;
+import com.nexus.biblioNepo.GLOBALEXCEPTIONHANDLER.exceptions.NoDatosQueMostrarExecption;
 import com.nexus.biblioNepo.GLOBALEXCEPTIONHANDLER.exceptions.deleteFileCloudinary;
 import com.nexus.biblioNepo.REPOSITORIES.autorRepository;
 import com.nexus.biblioNepo.REPOSITORIES.paisRepository;
 import com.nexus.biblioNepo.SERVICES.IAdminAutors;
 import com.nexus.biblioNepo.SERVICES.cloudinary.ICloudinaryService;
 import com.nexus.biblioNepo.UTILS.AuditableUtils;
+import com.nexus.biblioNepo.UTILS.PageResponseUtils;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -133,7 +140,6 @@ public class AdminAutorsService implements IAdminAutors {
     }
 
     @Caching(
-    
             evict = {
                 @CacheEvict(value = "autors", allEntries = true)
             }
@@ -151,8 +157,25 @@ public class AdminAutorsService implements IAdminAutors {
         }
 
         AuditableUtils.delete(autor, "prueba", "prueba");
-        
+
         return autorRepo.save(autor);
+
+    }
+
+    @Cacheable(value = "autors")
+    @Transactional(readOnly = true)
+    @Override
+    public PageResponse<AutorAdminDtoResp> getAll(String name, Integer id_pais, Boolean id_delete, String name_boock, Integer id_categoria_boock, Pageable pageable) {
+
+        Page<AutorAdminDtoResp> page = autorRepo.getAllAutorsAdmin(
+                name, id_pais, id_delete, name_boock,
+                id_categoria_boock, pageable);
+
+        if (page.isEmpty()) {
+            throw new NoDatosQueMostrarExecption("No hay autores que mostrar");
+        }
+
+        return PageResponseUtils.CreatePageReponse(page);
 
     }
 

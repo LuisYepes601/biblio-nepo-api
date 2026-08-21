@@ -18,8 +18,8 @@
             <Env.CDNARY_NAME>divhisdcx</Env.CDNARY_NAME>
             <Env.CDNARY_KEY>911728918984316</Env.CDNARY_KEY>
             <Env.CDNARY_SECRET>7LssRNHPoQrrolULjVEIowy2K1A</Env.CDNARY_SECRET>
-            <Env.REDIS_HOST>https://knowing-tiger-158569.upstash.io</Env.REDIS_HOST>
-            <Env.REDIS_PORT>6379</Env.REDIS_PORT>
+            <Env.REDIS_HOST>knowing-tiger-158569.upstash.io</Env.REDIS_HOST>
+            
         </properties>
     </action>
     <action>
@@ -70,8 +70,8 @@
                 <Env.CDNARY_NAME>divhisdcx</Env.CDNARY_NAME>
                 <Env.CDNARY_KEY>911728918984316</Env.CDNARY_KEY>
                 <Env.CDNARY_SECRET>7LssRNHPoQrrolULjVEIowy2K1A</Env.CDNARY_SECRET>
-                <Env.REDIS_HOST>https://knowing-tiger-158569.upstash.io</Env.REDIS_HOST>
-                <Env.REDIS_PORT>6379</Env.REDIS_PORT>
+                <Env.REDIS_HOST>knowing-tiger-158569.upstash.io</Env.REDIS_HOST>
+                
             </properties>
         </action>
 </actions>

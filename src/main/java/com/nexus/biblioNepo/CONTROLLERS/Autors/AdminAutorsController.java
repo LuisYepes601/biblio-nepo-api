@@ -5,11 +5,14 @@
 package com.nexus.biblioNepo.CONTROLLERS.Autors;
 
 import com.nexus.biblioNepo.DTOS.request.autorDtoReq;
+import com.nexus.biblioNepo.DTOS.response.Autors.AutorAdminDtoResp;
+import com.nexus.biblioNepo.DTOS.response.PageResponse;
 import com.nexus.biblioNepo.SERVICES.IAdminAutors;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -91,6 +95,34 @@ public class AdminAutorsController {
         return ResponseEntity
                 .ok()
                 .body(new BasicResponseDto("El autor se ha eliminado correctamente del sistema"));
+    }
+
+    @Operation(
+            description = "Operción encargada de mostrar lso autores segun los filtro seleccionados",
+            method = "GET")
+    @GetMapping()
+    public ResponseEntity<PageResponse<AutorAdminDtoResp>> getAll(
+            @RequestParam(
+                    value = "name",
+                    required = false) String name,
+            @RequestParam(
+                    value = "id_pais",
+                    required = false) Integer idPais,
+            @RequestParam(
+                    value = "is_delete",
+                    required = false) Boolean isDelete,
+            @RequestParam(
+                    value = "name_boock",
+                    required = false) String nameBook,
+            @RequestParam(
+                    value = "id_categoria_boock",
+                    required = false) Integer idCategoriaBook,
+            Pageable pageable) {
+
+        return ResponseEntity
+                .ok()
+                .body(adminAutorServices.getAll(
+                        name, idPais, isDelete, nameBook, idCategoriaBook, pageable));
     }
 
 }
