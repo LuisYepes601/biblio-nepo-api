@@ -12,6 +12,7 @@ import com.nexus.biblioNepo.UTILS.PageResponseUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,9 +33,9 @@ public class rolService implements IRolService {
     @Cacheable(value = "roles-basic")
     @Transactional(readOnly = true)
     @Override
-    public PageResponse<RolDtoBasic> getAll() {
+    public PageResponse<RolDtoBasic> getAll(Pageable pageable) {
 
-        Page<RolDtoBasic> page = rolRepo.getAll();
+        Page<RolDtoBasic> page = rolRepo.getAll(pageable);
 
         if (page.isEmpty()) {
             throw new NoDatosQueMostrarExecption("No hay roles que mostrar");

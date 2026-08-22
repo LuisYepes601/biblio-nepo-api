@@ -6,6 +6,7 @@ package com.nexus.biblioNepo.SERVICES.Roles;
 
 import com.nexus.biblioNepo.DTOS.response.PageResponse;
 import com.nexus.biblioNepo.DTOS.response.Roles.RolDtoBasic;
+import org.springframework.data.domain.Pageable;
 
 /**
  *
@@ -13,5 +14,5 @@ import com.nexus.biblioNepo.DTOS.response.Roles.RolDtoBasic;
  */
 public interface IRolService {
 
-    public PageResponse<RolDtoBasic> getAll();
+    public PageResponse<RolDtoBasic> getAll(Pageable pageable);
 }

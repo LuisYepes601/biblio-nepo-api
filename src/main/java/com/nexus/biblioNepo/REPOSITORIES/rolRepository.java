@@ -74,5 +74,5 @@ public interface rolRepository extends JpaRepository<rol, Integer> {
            WHERE r.isDelete = false
            
            """)
-    public Page<RolDtoBasic> getAll();
+    public Page<RolDtoBasic> getAll(Pageable pageable);
 }

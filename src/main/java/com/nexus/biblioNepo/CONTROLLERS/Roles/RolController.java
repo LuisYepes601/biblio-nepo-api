@@ -10,6 +10,7 @@ import com.nexus.biblioNepo.SERVICES.Roles.IRolService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,11 +36,11 @@ public class RolController {
 
     @Operation(description = "Operación encargada de mostrar roles con informacion basica")
     @GetMapping()
-    public ResponseEntity<PageResponse<RolDtoBasic>> getAll() {
+    public ResponseEntity<PageResponse<RolDtoBasic>> getAll(Pageable pageable) {
 
         return ResponseEntity
                 .ok()
-                .body(rolService.getAll());
+                .body(rolService.getAll(pageable));
     }
 
 }
