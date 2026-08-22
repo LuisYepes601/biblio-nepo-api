@@ -50,7 +50,6 @@ public interface autorRepository extends JpaRepository<Autor, Integer> {
            AND (:is_delete IS NULL OR p.isDelete = :is_delete)
            AND (:name_boock IS NULL OR b.titulo = :name_boock)
            AND (:id_categoria_boock IS NULL OR  cb.id = :id_categoria_boock)
-           AND (:name IS NULL OR a.name <> :name)
            
            """)
     public Page<AutorAdminDtoResp> getAllAutorsAdmin(

@@ -5,6 +5,7 @@
 package com.nexus.biblioNepo.GLOBALEXCEPTIONHANDLER;
 
 import com.nexus.biblioNepo.GLOBALEXCEPTIONHANDLER.exceptions.DatoNoExistenteEcxeption;
+import com.nexus.biblioNepo.GLOBALEXCEPTIONHANDLER.exceptions.DatoYaExistenteException;
 import com.nexus.biblioNepo.GLOBALEXCEPTIONHANDLER.exceptions.NoDatosQueMostrarExecption;
 import com.nexus.biblioNepo.GLOBALEXCEPTIONHANDLER.exceptions.deleteFileCloudinary;
 import com.nexus.biblioNepo.GLOBALEXCEPTIONHANDLER.exceptions.uploadFileCloudinary;
@@ -92,6 +93,16 @@ public class globalExceptionsHandler {
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
 
+    }
+
+    @ExceptionHandler(DatoYaExistenteException.class)
+    public ResponseEntity<?> handlerDatoYaExistenteException(DatoYaExistenteException ex) {
+
+        Map<String, String> error = new HashMap<>();
+
+        error.put("Error", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(error);
     }
 
 }

@@ -20,6 +20,7 @@ public class AuditableUtils {
         
         entity.setUpdateBy(emailUser);
         entity.setUpdateName(userName);
+        entity.setUpdateAt(LocalDateTime.now());
         
         return entity;
         

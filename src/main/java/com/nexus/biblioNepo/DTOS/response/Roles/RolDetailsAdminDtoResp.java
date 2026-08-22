@@ -2,64 +2,42 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.nexus.biblioNepo.AUDITORIA;
+package com.nexus.biblioNepo.DTOS.response.Roles;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.MappedSuperclass;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDateTime;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 /**
  *
  * @author luis
  */
-@MappedSuperclass
-public class Auditoria {
+public class RolDetailsAdminDtoResp {
 
-    @Column(name = "create_at",
-            nullable = false)
-    private LocalDateTime createAt;
-
-    @Column(name = "update_at",
-            nullable = false)
-    private LocalDateTime updateAt;
-
-    @Column(name = "delete_at")
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     private LocalDateTime deleteAt;
 
-    @Column(name = "is_delete")
-    private boolean isDelete;
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
+    private Boolean isDelete;
 
-    @Column(name = "create_by",
-            nullable = false)
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     private String createBy;
 
-    @Column(name = "creator_name",
-            nullable = false,
-            length = 50)
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     private String creatorName;
 
-    @Column(name = "update_by",
-            nullable = false)
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     private String updateBy;
 
-    @Column(name = "update_name",
-            nullable = false)
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     private String updateName;
 
-    @Column(name = "delete_by")
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     private String deleteBy;
 
-    @Column(name = "delete_name",
-            length = 50)
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     private String deleteName;
 
-    public Auditoria(LocalDateTime createAt, LocalDateTime updateAt, LocalDateTime deleteAt, boolean isDelete, String createBy, String creatorName, String updateBy, String updateName, String deleteBy, String deleteName) {
-        this.createAt = createAt;
-        this.updateAt = updateAt;
+    public RolDetailsAdminDtoResp(LocalDateTime deleteAt, Boolean isDelete, String createBy, String creatorName, String updateBy, String updateName, String deleteBy, String deleteName) {
         this.deleteAt = deleteAt;
         this.isDelete = isDelete;
         this.createBy = createBy;
@@ -70,23 +48,7 @@ public class Auditoria {
         this.deleteName = deleteName;
     }
 
-    public Auditoria() {
-    }
-
-    public LocalDateTime getCreateAt() {
-        return createAt;
-    }
-
-    public void setCreateAt(LocalDateTime createAt) {
-        this.createAt = createAt;
-    }
-
-    public LocalDateTime getUpdateAt() {
-        return updateAt;
-    }
-
-    public void setUpdateAt(LocalDateTime updateAt) {
-        this.updateAt = updateAt;
+    public RolDetailsAdminDtoResp() {
     }
 
     public LocalDateTime getDeleteAt() {
@@ -97,11 +59,11 @@ public class Auditoria {
         this.deleteAt = deleteAt;
     }
 
-    public boolean isIsDelete() {
+    public Boolean getIsDelete() {
         return isDelete;
     }
 
-    public void setIsDelete(boolean isDelete) {
+    public void setIsDelete(Boolean isDelete) {
         this.isDelete = isDelete;
     }
 
@@ -152,5 +114,6 @@ public class Auditoria {
     public void setDeleteName(String deleteName) {
         this.deleteName = deleteName;
     }
-
+    
+    
 }

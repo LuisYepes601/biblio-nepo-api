@@ -11,8 +11,10 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -20,7 +22,10 @@ import java.util.List;
  * @author luis
  */
 @Table(
-        name = "rol")
+        name = "rol",
+        indexes = {
+            @Index(name = "idx_rol_nombre", columnList = "nombre")
+        })
 @Entity
 public class rol extends Auditoria {
 
@@ -41,4 +46,49 @@ public class rol extends Auditoria {
 
     @OneToMany(mappedBy = "rol", fetch = FetchType.LAZY)
     private List<usuario> usuarios;
+
+    public rol(Integer id, String nombre, String descripcion, List<usuario> usuarios, LocalDateTime createAt, LocalDateTime updateAt, LocalDateTime deleteAt, boolean isDelete, String createBy, String creatorName, String updateBy, String updateName, String deleteBy, String deleteName) {
+        super(createAt, updateAt, deleteAt, isDelete, createBy, creatorName, updateBy, updateName, deleteBy, deleteName);
+        this.id = id;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.usuarios = usuarios;
+    }
+
+    public rol() {
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public List<usuario> getUsuarios() {
+        return usuarios;
+    }
+
+    public void setUsuarios(List<usuario> usuarios) {
+        this.usuarios = usuarios;
+    }
+    
+    
 }
