@@ -31,6 +31,7 @@ public interface IAdminAutors {
             Boolean id_delete,
             String name_boock,
             Integer id_categoria_boock,
+            Integer excluyed_id,
             Pageable pageable);
     
     public AutorDetailsAdminDtoResp getDetailAdmin(Integer id);

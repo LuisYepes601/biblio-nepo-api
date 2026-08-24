@@ -34,7 +34,7 @@ import restaurante_gratitude.demp.DTOS.Global.BasicResponseDto;
 @Tag(
         name = "Administración de Autores",
         description = "Módulo encargado de administrar las operaciones y funcionalidades relacionadas con los autores del sistema.")
-@RequestMapping(value = "/api/v1/autors")
+@RequestMapping(value = "/api/v1/admin/autors")
 @RestController
 public class AdminAutorsController {
 
@@ -104,26 +104,29 @@ public class AdminAutorsController {
     @GetMapping()
     public ResponseEntity<PageResponse<AutorAdminDtoResp>> getAll(
             @RequestParam(
-                    value = "name",
+                    name = "name",
                     required = false) String name,
             @RequestParam(
-                    value = "id_pais",
+                    name = "id_pais",
                     required = false) Integer idPais,
             @RequestParam(
-                    value = "is_delete",
+                    name = "is_delete",
                     required = false) Boolean isDelete,
             @RequestParam(
-                    value = "name_boock",
+                    name = "name_boock",
                     required = false) String nameBook,
             @RequestParam(
-                    value = "id_categoria_boock",
+                    name = "id_categoria_boock",
                     required = false) Integer idCategoriaBook,
+            @RequestParam(
+                    name = "excluyed_id",
+                    required = false) Integer excluyed_id,
             Pageable pageable) {
 
         return ResponseEntity
                 .ok()
                 .body(adminAutorServices.getAll(
-                        name, idPais, isDelete, nameBook, idCategoriaBook, pageable));
+                        name, idPais, isDelete, nameBook, idCategoriaBook, excluyed_id, pageable));
     }
 
     @Operation(

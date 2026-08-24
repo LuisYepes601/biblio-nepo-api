@@ -166,11 +166,11 @@ public class AdminAutorsService implements IAdminAutors {
     @Cacheable(value = "autors")
     @Transactional(readOnly = true)
     @Override
-    public PageResponse<AutorAdminDtoResp> getAll(String name, Integer id_pais, Boolean id_delete, String name_boock, Integer id_categoria_boock, Pageable pageable) {
+    public PageResponse<AutorAdminDtoResp> getAll(String name, Integer id_pais, Boolean id_delete, String name_boock, Integer id_categoria_boock, Integer excluyed_id, Pageable pageable) {
 
         Page<AutorAdminDtoResp> page = autorRepo.getAllAutorsAdmin(
                 name, id_pais, id_delete, name_boock,
-                id_categoria_boock, pageable);
+                id_categoria_boock, excluyed_id, pageable);
 
         if (page.isEmpty()) {
             throw new NoDatosQueMostrarExecption("No hay autores que mostrar");
@@ -186,7 +186,7 @@ public class AdminAutorsService implements IAdminAutors {
     public AutorDetailsAdminDtoResp getDetailAdmin(Integer id) {
 
         return autorRepo.getDetailsById(id)
-                .orElseThrow(() 
+                .orElseThrow(()
                         -> new DatoNoExistenteEcxeption("El autor no tiene detalles o no existe en el sistema"));
 
     }
