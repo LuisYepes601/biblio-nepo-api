@@ -23,6 +23,15 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface rolRepository extends JpaRepository<rol, Integer> {
 
+    @Query("""
+           
+           SELECT r
+           
+           FROM rol r
+           
+           WHERE (LOWER(r.nombre) = LOWER(:nombre))
+           AND (r.isDelete = false)
+           """)
     public Optional<rol> findByNombreIgnoreCase(String nombre);
 
     @Query("""

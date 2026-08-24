@@ -131,12 +131,8 @@ public class rolAdminService implements IRolAdmin {
 
             if (rol.getId() != optional.get().getId()) {
 
-                rol roln = optional.get();
+                throw new DatoYaExistenteException("Ya existe un rol con ese nombre y esta activo actualmente en el sistema");
 
-                if (!roln.isIsDelete()) {
-
-                    throw new DatoYaExistenteException("Ya existe un rol con ese nombre y esta activo actualmente en el sistema");
-                }
             }
         }
 
