@@ -4,6 +4,7 @@
  */
 package com.nexus.biblioNepo.SERVICES.RestClients;
 
+import com.nexus.biblioNepo.DTOS.response.City.CityDtoBasic;
 import com.nexus.biblioNepo.DTOS.response.Departamentos.DepartamentoDtoResp;
 import com.nexus.biblioNepo.GLOBALEXCEPTIONHANDLER.exceptions.NoDatosQueMostrarExecption;
 import java.util.List;
@@ -46,6 +47,25 @@ public class ApiColombiaRestclient {
         }
 
         return response.getBody();
+    }
+
+    public List<CityDtoBasic> getCities() {
+
+        ResponseEntity<List<CityDtoBasic>> response = restClient.
+                get()
+                .uri("api/v1/City")
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .retrieve()
+                .toEntity(new ParameterizedTypeReference<List<CityDtoBasic>>() {
+                });
+
+        if (response.getStatusCode().isSameCodeAs(HttpStatus.NOT_FOUND)) {
+
+            throw new NoDatosQueMostrarExecption("No hay ciudades que consumir de la api");
+        }
+
+        return response.getBody();
+
     }
 
 }

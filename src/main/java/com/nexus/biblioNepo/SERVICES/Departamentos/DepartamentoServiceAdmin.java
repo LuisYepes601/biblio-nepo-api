@@ -19,38 +19,38 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 public class DepartamentoServiceAdmin implements IDepartamentoServiceAdmin {
-
+    
     private ApiColombiaRestclient apiColombiaRestclient;
     private departamentoRepository depRepo;
     private paisRepository paisRepo;
-
+    
     @Autowired
     public DepartamentoServiceAdmin(ApiColombiaRestclient apiColombiaRestclient, departamentoRepository depRepo, paisRepository paisRepo) {
         this.apiColombiaRestclient = apiColombiaRestclient;
         this.depRepo = depRepo;
         this.paisRepo = paisRepo;
     }
-
+    
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void cargarDepartamentosByAPI() {
-
+        
         apiColombiaRestclient.getDepartamentos()
                 .stream()
                 .forEach((dep) -> {
                     departamento de = new departamento();
-
+                    de.setId(dep.getId());
                     de.setNombre(dep.getNombre());
                     if (dep.getCityCapital() != null) {
                         de.setCodePostal(dep.getCityCapital().getPostalCode());
-
+                        
                     }
                     de.setPais(paisRepo.findByNombreIgnoreCase("colombia")
                             .orElseThrow(() -> new DatoNoExistenteEcxeption("El pais no existe en el sistema")));
-
+                    
                     depRepo.save(de);
-
+                    
                 });
     }
-
+    
 }

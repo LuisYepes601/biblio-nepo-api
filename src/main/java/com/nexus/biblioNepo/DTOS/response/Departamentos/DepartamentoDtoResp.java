@@ -12,13 +12,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class DepartamentoDtoResp {
 
+    private Integer id;
+
     @JsonProperty("name")
     private String nombre;
 
     @JsonProperty("cityCapital")
     private cityCapital cityCapital;
 
-    public DepartamentoDtoResp(String nombre, cityCapital cityCapital) {
+    public DepartamentoDtoResp(Integer id, String nombre, cityCapital cityCapital) {
+        this.id = id;
         this.nombre = nombre;
         this.cityCapital = cityCapital;
     }
@@ -40,6 +43,14 @@ public class DepartamentoDtoResp {
 
     public void setCityCapital(cityCapital cityCapital) {
         this.cityCapital = cityCapital;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
 }

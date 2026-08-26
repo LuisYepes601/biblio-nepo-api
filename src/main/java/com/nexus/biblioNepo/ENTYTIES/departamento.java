@@ -31,7 +31,6 @@ import java.util.List;
 public class departamento {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(
