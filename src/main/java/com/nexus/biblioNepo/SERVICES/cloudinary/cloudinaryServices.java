@@ -80,4 +80,25 @@ public class cloudinaryServices implements ICloudinaryService {
 
     }
 
+    @Override
+    public CloudinaryUploadResponse uploadFotoPerfil(MultipartFile file, String nameUser, String nameFile) {
+
+        Map<String, Object> response = new HashMap<>();
+
+        try {
+
+            response = cloudinary.uploader()
+                    .uploadLarge(file, CloudinaryFileUtils.ProfilePhtotoUser(nameUser, nameFile));
+
+        } catch (IOException e) {
+        }
+
+        CloudinaryUploadResponse cloudinaryUploadResponse = new CloudinaryUploadResponse();
+
+        cloudinaryUploadResponse.setPublicId(response.get("public_id").toString());
+        cloudinaryUploadResponse.setSecureUrl(response.get("secure_url").toString());
+
+        return cloudinaryUploadResponse;
+    }
+
 }

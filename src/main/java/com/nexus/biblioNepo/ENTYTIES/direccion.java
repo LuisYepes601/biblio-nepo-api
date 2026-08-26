@@ -4,6 +4,8 @@
  */
 package com.nexus.biblioNepo.ENTYTIES;
 
+import com.nexus.biblioNepo.AUDITORIA.Auditoria;
+import com.nexus.biblioNepo.UTILS.AuditableUtils;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -14,6 +16,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -21,7 +24,7 @@ import jakarta.persistence.Table;
  */
 @Table(name = "direccion")
 @Entity
-public class direccion {
+public class direccion extends Auditoria {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,8 +32,7 @@ public class direccion {
 
     @Column(
             name = "barrio",
-            length = 100,
-            nullable = false)
+            length = 100)
     private String barrio;
 
     private String complemento;
@@ -45,5 +47,104 @@ public class direccion {
 
     @OneToOne(mappedBy = "direccion", fetch = FetchType.LAZY)
     private sede sede;
+
+    @OneToOne(mappedBy = "direccion", fetch = FetchType.LAZY)
+    private usuario usuario;
+
+    @JoinColumn(name = "id_departamento", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    private departamento departamento;
+
+    @JoinColumn(name = "id_ciudad", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    private ciudad ciudad;
+
+    public direccion(Integer id, String barrio, String complemento, String masDetalles, Pais pais, sede sede, usuario usuario, departamento departamento, ciudad ciudad, LocalDateTime createAt, LocalDateTime updateAt, LocalDateTime deleteAt, boolean isDelete, String createBy, String creatorName, String updateBy, String updateName, String deleteBy, String deleteName) {
+        super(createAt, updateAt, deleteAt, isDelete, createBy, creatorName, updateBy, updateName, deleteBy, deleteName);
+        this.id = id;
+        this.barrio = barrio;
+        this.complemento = complemento;
+        this.masDetalles = masDetalles;
+        this.pais = pais;
+        this.sede = sede;
+        this.usuario = usuario;
+        this.departamento = departamento;
+        this.ciudad = ciudad;
+    }
+
+    public direccion() {
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getBarrio() {
+        return barrio;
+    }
+
+    public void setBarrio(String barrio) {
+        this.barrio = barrio;
+    }
+
+    public String getComplemento() {
+        return complemento;
+    }
+
+    public void setComplemento(String complemento) {
+        this.complemento = complemento;
+    }
+
+    public String getMasDetalles() {
+        return masDetalles;
+    }
+
+    public void setMasDetalles(String masDetalles) {
+        this.masDetalles = masDetalles;
+    }
+
+    public Pais getPais() {
+        return pais;
+    }
+
+    public void setPais(Pais pais) {
+        this.pais = pais;
+    }
+
+    public sede getSede() {
+        return sede;
+    }
+
+    public void setSede(sede sede) {
+        this.sede = sede;
+    }
+
+    public usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public departamento getDepartamento() {
+        return departamento;
+    }
+
+    public void setDepartamento(departamento departamento) {
+        this.departamento = departamento;
+    }
+
+    public ciudad getCiudad() {
+        return ciudad;
+    }
+
+    public void setCiudad(ciudad ciudad) {
+        this.ciudad = ciudad;
+    }
 
 }

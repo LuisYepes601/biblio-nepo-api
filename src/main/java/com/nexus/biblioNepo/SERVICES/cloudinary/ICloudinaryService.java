@@ -16,4 +16,6 @@ public interface ICloudinaryService {
     public CloudinaryUploadResponse uploadPrymaryPhotoBoock(MultipartFile file, String nameAutor, String namefile);
     
     public void deleteFile(String public_id);
+    
+    public CloudinaryUploadResponse uploadFotoPerfil(MultipartFile file, String nameUser, String nameFile);
 }

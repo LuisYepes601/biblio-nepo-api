@@ -42,7 +42,7 @@ public class departamento {
 
     @Column(
             name = "code_postal",
-            nullable = false,
+            nullable = true,
             length = 50)
     private String codePostal;
 
@@ -52,5 +52,65 @@ public class departamento {
 
     @OneToMany(mappedBy = "departamento", fetch = FetchType.LAZY)
     private List<ciudad> ciudades;
+
+    @OneToMany(mappedBy = "departamento", fetch = FetchType.LAZY)
+    private List<direccion> direcciones;
+
+    public departamento(String nombre, String codePostal, Pais pais) {
+        this.nombre = nombre;
+        this.codePostal = codePostal;
+        this.pais = pais;
+    }
+
+    public departamento() {
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getCodePostal() {
+        return codePostal;
+    }
+
+    public void setCodePostal(String codePostal) {
+        this.codePostal = codePostal;
+    }
+
+    public Pais getPais() {
+        return pais;
+    }
+
+    public void setPais(Pais pais) {
+        this.pais = pais;
+    }
+
+    public List<ciudad> getCiudades() {
+        return ciudades;
+    }
+
+    public void setCiudades(List<ciudad> ciudades) {
+        this.ciudades = ciudades;
+    }
+
+    public List<direccion> getDirecciones() {
+        return direcciones;
+    }
+
+    public void setDirecciones(List<direccion> direcciones) {
+        this.direcciones = direcciones;
+    }
 
 }

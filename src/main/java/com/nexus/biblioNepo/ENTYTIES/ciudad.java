@@ -13,7 +13,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.List;
 
 /**
  *
@@ -41,5 +43,8 @@ public class ciudad {
     @JoinColumn(name = "id_departamento")
     @ManyToOne(fetch = FetchType.LAZY)
     private departamento departamento;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ciudad")
+    private List<direccion> direcciones;
 
 }
