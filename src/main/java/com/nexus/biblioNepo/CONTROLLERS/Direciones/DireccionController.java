@@ -39,13 +39,16 @@ public class DireccionController {
         this.direccionService = direccionService;
     }
 
-    @Operation(description = "Operación encargada de crerar una direccion en el sistema",
+    @Operation(description = "Operación encargada de crearle una direccion en el sistema al usuario",
             method = "POST")
-    @PostMapping()
-    public ResponseEntity<BasicResponseDto> create(@Valid
-            @RequestBody DireccionDtoReq direccionDtoReq) {
+    @PostMapping(value = "/{id_user}")
+    public ResponseEntity<BasicResponseDto> create(
+            @Valid
+            @RequestBody DireccionDtoReq direccionDtoReq,
+            @PathVariable(name = "id_user",
+                    required = true) Integer id_user) {
 
-        direccionService.create(direccionDtoReq);
+        direccionService.create(id_user, direccionDtoReq);
 
         return ResponseEntity
                 .ok()

@@ -12,6 +12,7 @@ import com.nexus.biblioNepo.REPOSITORIES.ciudadRepository;
 import com.nexus.biblioNepo.REPOSITORIES.departamentoRepository;
 import com.nexus.biblioNepo.REPOSITORIES.direccionRepository;
 import com.nexus.biblioNepo.REPOSITORIES.paisRepository;
+import com.nexus.biblioNepo.REPOSITORIES.usuarioRepository;
 import com.nexus.biblioNepo.UTILS.AuditableUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -31,21 +32,26 @@ public class DireccionService implements IDireccionService {
     private ciudadRepository ciudadRepo;
     private paisRepository paisRepo;
     private departamentoRepository depRepo;
+    private usuarioRepository usuarioRepo;
 
     @Autowired
-    public DireccionService(direccionRepository direcccionRepo, ciudadRepository ciudadRepo, paisRepository paisRepo, departamentoRepository depRepo) {
+    public DireccionService(direccionRepository direcccionRepo, ciudadRepository ciudadRepo, paisRepository paisRepo, departamentoRepository depRepo, usuarioRepository usuarioRepo) {
         this.direcccionRepo = direcccionRepo;
         this.ciudadRepo = ciudadRepo;
         this.paisRepo = paisRepo;
         this.depRepo = depRepo;
+        this.usuarioRepo = usuarioRepo;
     }
 
     @CacheEvict(value = "direcciones", allEntries = true)
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public direccion create(DireccionDtoReq direccionDtoReq) {
+    public direccion create(Integer id_user, DireccionDtoReq direccionDtoReq) {
 
         direccion dir = new direccion();
+
+        usuarioRepo.findById(id_user)
+                .orElseThrow(() -> new DatoNoExistenteEcxeption("El usuario no existe en el sistema"));
 
         llebarDatos(dir, direccionDtoReq);
         AuditableUtils.create(dir, "pruebs", "prueba");

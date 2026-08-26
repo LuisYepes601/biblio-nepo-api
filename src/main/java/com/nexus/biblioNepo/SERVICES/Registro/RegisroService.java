@@ -4,20 +4,23 @@
  */
 package com.nexus.biblioNepo.SERVICES.Registro;
 
+import com.nexus.biblioNepo.DTOS.request.DireccionDtoReq;
 import com.nexus.biblioNepo.DTOS.request.Usuarios.UsuarioBasicoDtoReq;
 import com.nexus.biblioNepo.DTOS.response.Cloudinary.CloudinaryUploadResponse;
-import com.nexus.biblioNepo.ENTYTIES.tipoidentificacion;
 import com.nexus.biblioNepo.ENTYTIES.usuario;
 import com.nexus.biblioNepo.GLOBALEXCEPTIONHANDLER.exceptions.DatoNoExistenteEcxeption;
 import com.nexus.biblioNepo.GLOBALEXCEPTIONHANDLER.exceptions.DatoYaExistenteException;
 import com.nexus.biblioNepo.REPOSITORIES.rolRepository;
 import com.nexus.biblioNepo.REPOSITORIES.tipoIdentificacionRepository;
 import com.nexus.biblioNepo.REPOSITORIES.usuarioRepository;
+import com.nexus.biblioNepo.SERVICES.Direcciones.IDireccionService;
 import com.nexus.biblioNepo.SERVICES.PasswordEncoder.PasswordEncoderService;
 import com.nexus.biblioNepo.SERVICES.cloudinary.ICloudinaryService;
 import java.util.Optional;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -32,13 +35,16 @@ public class RegisroService implements IRegistroService {
     private tipoIdentificacionRepository tipoIdentificacionRepo;
     private ICloudinaryService cloudinaryService;
     private PasswordEncoderService passwordEncodeService;
+    private IDireccionService direccionService;
 
-    public RegisroService(usuarioRepository usuarioRepo, rolRepository rolRepo, tipoIdentificacionRepository tipoIdentificacionRepo, ICloudinaryService cloudinaryService, PasswordEncoderService passwordEncodeService) {
+    @Autowired
+    public RegisroService(usuarioRepository usuarioRepo, rolRepository rolRepo, tipoIdentificacionRepository tipoIdentificacionRepo, ICloudinaryService cloudinaryService, PasswordEncoderService passwordEncodeService, IDireccionService direccionService) {
         this.usuarioRepo = usuarioRepo;
         this.rolRepo = rolRepo;
         this.tipoIdentificacionRepo = tipoIdentificacionRepo;
         this.cloudinaryService = cloudinaryService;
         this.passwordEncodeService = passwordEncodeService;
+        this.direccionService = direccionService;
     }
 
     @Override
@@ -95,6 +101,19 @@ public class RegisroService implements IRegistroService {
 
         return usuarioRepo.save(us);
 
+    }
+
+    @CacheEvict(value = "direcciones")
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public usuario registerDireccion(Integer id_user, DireccionDtoReq direccionDtoReq) {
+
+        usuario user = usuarioRepo.findById(id_user)
+                .orElseThrow(() -> new DatoNoExistenteEcxeption("El usuario no existe en el sistema"));
+
+        user.setDireccion(direccionService.create(id_user, direccionDtoReq));
+
+        return usuarioRepo.save(user);
     }
 
 }

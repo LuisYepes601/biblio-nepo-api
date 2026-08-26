@@ -4,6 +4,7 @@
  */
 package com.nexus.biblioNepo.SERVICES.Registro;
 
+import com.nexus.biblioNepo.DTOS.request.DireccionDtoReq;
 import com.nexus.biblioNepo.DTOS.request.Usuarios.UsuarioBasicoDtoReq;
 import com.nexus.biblioNepo.ENTYTIES.usuario;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,8 +13,9 @@ import org.springframework.web.multipart.MultipartFile;
  *
  * @author luis
  */
-
 public interface IRegistroService {
-    
+
     public usuario register(UsuarioBasicoDtoReq usuarioBasicoDtoReq, MultipartFile fotoPerfil);
+
+    public usuario registerDireccion(Integer id_user, DireccionDtoReq direccionDtoReq);
 }

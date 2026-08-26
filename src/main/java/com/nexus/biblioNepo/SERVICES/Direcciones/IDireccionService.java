@@ -14,7 +14,7 @@ import com.nexus.biblioNepo.ENTYTIES.direccion;
  */
 public interface IDireccionService {
     
-    public direccion create(DireccionDtoReq direccionDtoReq);
+    public direccion create(Integer id_user, DireccionDtoReq direccionDtoReq);
     
     public direccion updateById(Integer id, DireccionDtoReq direccionDtoReq);
     
