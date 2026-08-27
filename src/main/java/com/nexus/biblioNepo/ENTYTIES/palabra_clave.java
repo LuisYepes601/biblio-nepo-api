@@ -4,6 +4,7 @@
  */
 package com.nexus.biblioNepo.ENTYTIES;
 
+import com.nexus.biblioNepo.AUDITORIA.Auditoria;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -12,6 +13,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -20,7 +22,7 @@ import java.util.List;
  */
 @Table(name = "palabra_clave")
 @Entity
-public class palabra_clave {
+public class palabra_clave extends Auditoria{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,5 +39,52 @@ public class palabra_clave {
 
     @OneToMany(mappedBy = "palabra_clave", fetch = FetchType.LAZY)
     private List<palabra_clave_libro> libros;
+
+    public palabra_clave(Integer id, String nombre, String descripcion, List<palabra_clave_libro> libros, LocalDateTime createAt, LocalDateTime updateAt, LocalDateTime deleteAt, boolean isDelete, String createBy, String creatorName, String updateBy, String updateName, String deleteBy, String deleteName) {
+        super(createAt, updateAt, deleteAt, isDelete, createBy, creatorName, updateBy, updateName, deleteBy, deleteName);
+        this.id = id;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.libros = libros;
+    }
+
+   
+
+    public palabra_clave() {
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public List<palabra_clave_libro> getLibros() {
+        return libros;
+    }
+
+    public void setLibros(List<palabra_clave_libro> libros) {
+        this.libros = libros;
+    }
+    
+    
 
 }

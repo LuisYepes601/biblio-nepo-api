@@ -13,6 +13,6 @@ import org.springframework.stereotype.Repository;
  * @author luis
  */
 @Repository
-public interface BoockRepository extends JpaRepository<Boock, Integer>{
+public interface BoockRepository extends JpaRepository<Boock, Long>{
     
 }

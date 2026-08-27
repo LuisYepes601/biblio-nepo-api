@@ -83,4 +83,14 @@ public class categoryBoock extends Auditoria {
         this.boocks = boocks;
     }
 
+    public categoryBoock(Integer id, String nombre, String descripcion, List<libro_categoria> boocks, LocalDateTime createAt, LocalDateTime updateAt, LocalDateTime deleteAt, boolean isDelete, String createBy, String creatorName, String updateBy, String updateName, String deleteBy, String deleteName) {
+        super(createAt, updateAt, deleteAt, isDelete, createBy, creatorName, updateBy, updateName, deleteBy, deleteName);
+        this.id = id;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.boocks = boocks;
+    }
+    
+    
+
 }

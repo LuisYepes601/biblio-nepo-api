@@ -48,6 +48,9 @@ public class tipoLibro extends Auditoria {
         this.boocks = boocks;
     }
 
+    public tipoLibro() {
+    }
+
     public Integer getId() {
         return id;
     }

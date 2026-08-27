@@ -32,4 +32,39 @@ public class libro_tema {
     @JoinColumn(name = "id_libro", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
     private Boock boock;
+
+    public libro_tema(Integer id, tema tema, Boock boock) {
+        this.id = id;
+        this.tema = tema;
+        this.boock = boock;
+    }
+
+    public libro_tema() {
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public tema getTema() {
+        return tema;
+    }
+
+    public void setTema(tema tema) {
+        this.tema = tema;
+    }
+
+    public Boock getBoock() {
+        return boock;
+    }
+
+    public void setBoock(Boock boock) {
+        this.boock = boock;
+    }
+    
+    
 }

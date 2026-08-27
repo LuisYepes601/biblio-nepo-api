@@ -54,6 +54,9 @@ public class tema extends Auditoria {
         this.libros = libros;
     }
 
+    public tema() {
+    }
+
     public Integer getId() {
         return id;
     }
