@@ -39,8 +39,10 @@ public class CategoriaService implements ICategoriaService {
     private BoockRepository libroRepo;
 
     @Autowired
-    public CategoriaService(categoryBoockRepository catBoockRepo) {
+    public CategoriaService(categoryBoockRepository catBoockRepo, libro_categoria_repository libro_cat_repo, BoockRepository libroRepo) {
         this.catBoockRepo = catBoockRepo;
+        this.libro_cat_repo = libro_cat_repo;
+        this.libroRepo = libroRepo;
     }
 
     @Cacheable(value = "categorias-basic")
@@ -66,10 +68,10 @@ public class CategoriaService implements ICategoriaService {
         Optional<Boock> existelibro = libroRepo.findById(id_libro);
 
         if (existelibro.isPresent()) {
-            throw new DatoYaExistenteException("El libro ay existe en el sistema");
+            throw new DatoYaExistenteException("El libro ya existe en el sistema");
         }
 
-        if (existelibro.get().isIsDelete()) {
+        if (existelibro.isEmpty()) {
 
             throw new DatoNoExistenteEcxeption("El libro no existe en el sistema");
         }

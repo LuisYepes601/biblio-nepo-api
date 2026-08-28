@@ -59,13 +59,13 @@ public class CategoriaController {
 
     @Operation(description = "Operación encaragda de asignarles ccategorias a un libro",
             method = "POST")
-    @PostMapping(value = "/asignar-by-libro/{id}")
+    @PostMapping(value = "/asignar-by-libro/{id_libro}")
     public ResponseEntity<BasicResponseDto> asignarCaegoriasALibro(
             @PathVariable(
                     name = "id_libro",
                     required = true) Long id_libro,
-            @Valid
-            @RequestBody(required = true) List<CategoriaAsignarDto> categoriasAsignarDtos) {
+        
+            @RequestBody(required = true) List<@Valid CategoriaAsignarDto> categoriasAsignarDtos) {
 
         categoriaService.asignarCategoriaLibro(id_libro, categoriasAsignarDtos);
 
