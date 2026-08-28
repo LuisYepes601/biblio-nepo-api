@@ -13,6 +13,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -34,4 +35,40 @@ public class libro_categoria extends Auditoria{
     @JoinColumn(name = "id_categoria", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
     private categoryBoock categoryBoock;
+
+    public libro_categoria(Integer id, Boock boock, categoryBoock categoryBoock, LocalDateTime createAt, LocalDateTime updateAt, LocalDateTime deleteAt, boolean isDelete, String createBy, String creatorName, String updateBy, String updateName, String deleteBy, String deleteName) {
+        super(createAt, updateAt, deleteAt, isDelete, createBy, creatorName, updateBy, updateName, deleteBy, deleteName);
+        this.id = id;
+        this.boock = boock;
+        this.categoryBoock = categoryBoock;
+    }
+
+    public libro_categoria() {
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Boock getBoock() {
+        return boock;
+    }
+
+    public void setBoock(Boock boock) {
+        this.boock = boock;
+    }
+
+    public categoryBoock getCategoryBoock() {
+        return categoryBoock;
+    }
+
+    public void setCategoryBoock(categoryBoock categoryBoock) {
+        this.categoryBoock = categoryBoock;
+    }
+    
+    
 }

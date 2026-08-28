@@ -14,6 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Index;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -40,4 +41,49 @@ public class generoLibro extends Auditoria {
 
     @OneToMany(mappedBy = "generoLibro", fetch = FetchType.LAZY)
     private List<libro_genero> libros_generos;
+
+    public generoLibro(Integer id, String nombre, String descripcion, List<libro_genero> libros_generos, LocalDateTime createAt, LocalDateTime updateAt, LocalDateTime deleteAt, boolean isDelete, String createBy, String creatorName, String updateBy, String updateName, String deleteBy, String deleteName) {
+        super(createAt, updateAt, deleteAt, isDelete, createBy, creatorName, updateBy, updateName, deleteBy, deleteName);
+        this.id = id;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.libros_generos = libros_generos;
+    }
+
+   
+    public generoLibro() {
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public List<libro_genero> getLibros_generos() {
+        return libros_generos;
+    }
+
+    public void setLibros_generos(List<libro_genero> libros_generos) {
+        this.libros_generos = libros_generos;
+    }
+
 }

@@ -41,11 +41,12 @@ public class Boock extends Auditoria {
     private String subtitulo;
 
     @Column(name = "isbn",
-            unique = true,
             length = 20)
     private String isbn;
 
-    @Column(length = 150)
+    @Column(
+            nullable = false,
+            length = 150)
     private String editorial;
 
     private LocalDate fechaPublicacion;
@@ -134,7 +135,8 @@ public class Boock extends Auditoria {
         this.prestamos = prestamos;
     }
 
-
+    public Boock() {
+    }
 
     public Long getId() {
         return id;

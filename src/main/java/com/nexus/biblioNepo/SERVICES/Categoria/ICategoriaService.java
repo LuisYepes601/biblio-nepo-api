@@ -4,8 +4,10 @@
  */
 package com.nexus.biblioNepo.SERVICES.Categoria;
 
+import com.nexus.biblioNepo.DTOS.request.Categoria.CategoriaAsignarDto;
 import com.nexus.biblioNepo.DTOS.response.Categoria.CategoriaDtoresp;
 import com.nexus.biblioNepo.DTOS.response.PageResponse;
+import java.util.List;
 import org.springframework.data.domain.Pageable;
 
 /**
@@ -13,6 +15,8 @@ import org.springframework.data.domain.Pageable;
  * @author luis
  */
 public interface ICategoriaService {
-    
-    public PageResponse<CategoriaDtoresp>getAll(String nombre, Pageable pageable);
+
+    public PageResponse<CategoriaDtoresp> getAll(String nombre, Pageable pageable);
+
+    public void asignarCategoriaLibro(Long id_libro, List<CategoriaAsignarDto> categorias);
 }

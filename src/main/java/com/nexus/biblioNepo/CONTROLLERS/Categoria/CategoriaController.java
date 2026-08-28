@@ -4,18 +4,25 @@
  */
 package com.nexus.biblioNepo.CONTROLLERS.Categoria;
 
+import com.nexus.biblioNepo.DTOS.request.Categoria.CategoriaAsignarDto;
 import com.nexus.biblioNepo.DTOS.response.Categoria.CategoriaDtoresp;
 import com.nexus.biblioNepo.DTOS.response.PageResponse;
 import com.nexus.biblioNepo.SERVICES.Categoria.ICategoriaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import restaurante_gratitude.demp.DTOS.Global.BasicResponseDto;
 
 /**
  *
@@ -48,6 +55,23 @@ public class CategoriaController {
                 .ok()
                 .body(categoriaService.getAll(nombre, pageable));
 
+    }
+
+    @Operation(description = "Operación encaragda de asignarles ccategorias a un libro",
+            method = "POST")
+    @PostMapping(value = "/asignar-by-libro/{id}")
+    public ResponseEntity<BasicResponseDto> asignarCaegoriasALibro(
+            @PathVariable(
+                    name = "id_libro",
+                    required = true) Long id_libro,
+            @Valid
+            @RequestBody(required = true) List<CategoriaAsignarDto> categoriasAsignarDtos) {
+
+        categoriaService.asignarCategoriaLibro(id_libro, categoriasAsignarDtos);
+
+        return ResponseEntity
+                .ok()
+                .body(new BasicResponseDto("Las catgeorias han sido añaidas al libro con éxito"));
     }
 
 }
