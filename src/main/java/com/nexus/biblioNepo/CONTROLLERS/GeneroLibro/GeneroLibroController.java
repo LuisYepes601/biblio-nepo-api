@@ -4,18 +4,24 @@
  */
 package com.nexus.biblioNepo.CONTROLLERS.GeneroLibro;
 
+import com.nexus.biblioNepo.DTOS.request.GeneroLibro.GeneroDtoBasicReq;
 import com.nexus.biblioNepo.DTOS.response.GenerLibro.GeneroLibroDtoResp;
 import com.nexus.biblioNepo.DTOS.response.PageResponse;
 import com.nexus.biblioNepo.SERVICES.GeneroLibre.IGeneroLibroService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import restaurante_gratitude.demp.DTOS.Global.BasicResponseDto;
 
 /**
  *
@@ -48,6 +54,22 @@ public class GeneroLibroController {
         return ResponseEntity
                 .ok()
                 .body(generoLibroService.getAll(nombre, pageable));
+    }
+
+    @Operation(description = "Operación encragada de asignar generos a un libro ya existente",
+            method = "POST")
+    @PostMapping(value = "/asignar")
+    public ResponseEntity<BasicResponseDto> asignarGEnerosALibro(
+            @RequestParam(name = "id_libro",
+                    required = true) Long id_libro,
+            @RequestBody(required = true) List<@Valid GeneroDtoBasicReq> generos
+    ) {
+
+        generoLibroService.asignarGenerosToLibro(id_libro, generos);
+
+        return ResponseEntity
+                .ok()
+                .body(new BasicResponseDto("Se han asignado con exito los generos al libro"));
     }
 
 }

@@ -80,4 +80,30 @@ public class CloudinaryFileUtils {
         return utils;
 
     }
+
+    public static Map<String, Object> portadaLibro(String nameFile) {
+
+        Map<String, Object> utils = new HashMap<>();
+
+        utils.put("public_id", "libros/portada/".concat(nameFile));
+        utils.put("transformation", new Transformation<>()
+                .quality("auto")
+                .fetchFormat("auto")
+                .crop("limit")
+                .width(700)
+                .height(700));
+
+        return utils;
+
+    }
+
+    public static Map<String, Object> libro(String nameFile) {
+
+        Map<String, Object> utils = new HashMap<>();
+
+        utils.put("public_id", "libro/" + nameFile);
+        utils.put("resource_type", "raw");
+
+        return utils;
+    }
 }

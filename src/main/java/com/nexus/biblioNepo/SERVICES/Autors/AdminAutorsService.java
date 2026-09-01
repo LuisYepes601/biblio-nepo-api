@@ -36,110 +36,112 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @Service
 public class AdminAutorsService implements IAdminAutors {
-
+    
     private ICloudinaryService cloudinaryService;
     private autorRepository autorRepo;
     private paisRepository paisRepo;
-
+    
     @Autowired
     public AdminAutorsService(ICloudinaryService cloudinaryService, autorRepository autorRepo, paisRepository paisRepo) {
         this.cloudinaryService = cloudinaryService;
         this.autorRepo = autorRepo;
         this.paisRepo = paisRepo;
     }
-
+    
     @CacheEvict(value = "autors", allEntries = true)
     @Transactional(rollbackFor = Exception.class)
     @Override
     public Autor create(MultipartFile imgAutor, autorDtoReq dtoReq) {
-
+        
         Autor autor;
-
+        
         autor = new Autor();
-
+        
         rellenarDatosAutores(autor, dtoReq);
-
+        
         AuditableUtils.create(autor, "prueba", "prueba");
-
+        
         cargarFotoAutor(imgAutor, autor, dtoReq);
-
+        
         return autorRepo.save(autor);
-
+        
     }
-
+    
     @CacheEvict(value = "autors", allEntries = true)
     @Transactional(rollbackFor = Exception.class)
     @Override
     public Autor updateAutorByID(Integer id, MultipartFile imgAutor, autorDtoReq dtoReq) {
-
+        
         Autor autor = autorRepo.findById(id)
                 .orElseThrow(() -> new DatoNoExistenteEcxeption("El autor no existe en el sistema"));
-
+        
         if (autor.isIsDelete()) {
             throw new DatoNoExistenteEcxeption("El autor no se encuentra actualmente en el sistema");
         }
-
+        
         rellenarDatosAutores(autor, dtoReq);
-
+        
         AuditableUtils.update(autor, "prueba", "prueba");
-
+        
         actualizarImagenAutor(imgAutor, autor, dtoReq);
-
+        
         return autorRepo.save(autor);
     }
-
+    
     public void rellenarDatosAutores(Autor autor, autorDtoReq dtoReq) {
-
+        
         autor.setNombre(dtoReq.getNombre().trim());
         autor.setFechaNacimiento(dtoReq.getFechaNacimiento());
-
+        
         if (dtoReq.getIsFallecido() != null) {
-
-            if (dtoReq.getIsFallecido()
+            
+            if (dtoReq.getIsFallecido() == true
                     && dtoReq.getFechaFallecimiento() != null) {
-
+                
                 autor.setIsFallecido(dtoReq.getIsFallecido());
                 autor.setFechaFallecimiento(dtoReq.getFechaFallecimiento());
             }
+            
+            autor.setIsFallecido(dtoReq.getIsFallecido());
         }
         autor.setNacionalidad(paisRepo.findById(dtoReq.getIdPais())
                 .orElseThrow(() -> new DatoNoExistenteEcxeption("El pais no existe en el sistema.")));
-
+        
         autor.setPrimerApellido(dtoReq.getPrimerApellido().trim());
         autor.setSegundoApellido(dtoReq.getSegundoApellido().trim());
-
+        
         if (dtoReq.getSegundoNombre() != null) {
             autor.setSegundoNombre(dtoReq.getSegundoNombre().trim());
-
+            
         }
     }
-
+    
     public void cargarFotoAutor(MultipartFile imgAutor, Autor autor, autorDtoReq dtoReq) {
         if (imgAutor != null) {
-
+            
             CloudinaryUploadResponse response = cloudinaryService.uploadPrymaryPhotoBoock(
                     imgAutor,
                     dtoReq.getNombre().trim(),
                     imgAutor.getOriginalFilename());
-
+            
             autor.setUrlFoto(response.getSecureUrl());
             autor.setPublicIdUrlFoto(response.getPublicId());
         }
     }
-
+    
     public void actualizarImagenAutor(MultipartFile imgAutor, Autor autor, autorDtoReq dtoReq) {
-
+        
         if (autor.getUrlFoto() == null) {
-
+            
             cargarFotoAutor(imgAutor, autor, dtoReq);
-
+            
         }
-
+        
         cloudinaryService.deleteFile(autor.getPublicIdUrlFoto());
         cargarFotoAutor(imgAutor, autor, dtoReq);
-
+        
     }
-
+    
     @Caching(
             evict = {
                 @CacheEvict(value = "autors", allEntries = true)
@@ -148,47 +150,47 @@ public class AdminAutorsService implements IAdminAutors {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public Autor deleteById(Integer id) {
-
+        
         Autor autor = autorRepo.findById(id)
                 .orElseThrow(() -> new DatoNoExistenteEcxeption("El auator no existe en el sistema"));
-
+        
         if (autor.isIsDelete()) {
-
+            
             throw new DatoNoExistenteEcxeption("El autor no se encuentra activo ene el sistema");
         }
-
+        
         AuditableUtils.delete(autor, "prueba", "prueba");
-
+        
         return autorRepo.save(autor);
-
+        
     }
-
+    
     @Cacheable(value = "autors")
     @Transactional(readOnly = true)
     @Override
     public PageResponse<AutorAdminDtoResp> getAll(String name, Integer id_pais, Boolean id_delete, String name_boock, Integer id_categoria_boock, Integer excluyed_id, Pageable pageable) {
-
+        
         Page<AutorAdminDtoResp> page = autorRepo.getAllAutorsAdmin(
                 name, id_pais, id_delete, name_boock,
                 id_categoria_boock, excluyed_id, pageable);
-
+        
         if (page.isEmpty()) {
             throw new NoDatosQueMostrarExecption("No hay autores que mostrar");
         }
-
+        
         return PageResponseUtils.CreatePageReponse(page);
-
+        
     }
-
+    
     @Cacheable(value = "autor-detail-admin", key = "#id")
     @Transactional(readOnly = true)
     @Override
     public AutorDetailsAdminDtoResp getDetailAdmin(Integer id) {
-
+        
         return autorRepo.getDetailsById(id)
                 .orElseThrow(()
                         -> new DatoNoExistenteEcxeption("El autor no tiene detalles o no existe en el sistema"));
-
+        
     }
-
+    
 }

@@ -8,6 +8,7 @@ import com.nexus.biblioNepo.DTOS.request.Categoria.CategoriaAsignarDto;
 import com.nexus.biblioNepo.DTOS.response.Categoria.CategoriaDtoresp;
 import com.nexus.biblioNepo.DTOS.response.PageResponse;
 import com.nexus.biblioNepo.ENTYTIES.Boock;
+import com.nexus.biblioNepo.ENTYTIES.categoryBoock;
 import com.nexus.biblioNepo.ENTYTIES.libro_categoria;
 import com.nexus.biblioNepo.GLOBALEXCEPTIONHANDLER.exceptions.DatoNoExistenteEcxeption;
 import com.nexus.biblioNepo.GLOBALEXCEPTIONHANDLER.exceptions.DatoYaExistenteException;
@@ -60,16 +61,11 @@ public class CategoriaService implements ICategoriaService {
 
     }
 
-    @CacheEvict(value = "categorias-basic", allEntries = true)
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void asignarCategoriaLibro(Long id_libro, List<CategoriaAsignarDto> categorias) {
 
         Optional<Boock> existelibro = libroRepo.findById(id_libro);
-
-        if (existelibro.isPresent()) {
-            throw new DatoYaExistenteException("El libro ya existe en el sistema");
-        }
 
         if (existelibro.isEmpty()) {
 
@@ -103,6 +99,36 @@ public class CategoriaService implements ICategoriaService {
                     }
                 });
 
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void EliminarCategoriaDeLibro(Long id_libro, Integer id_cat, Integer id_cat_lib) {
+
+        Boock boock = libroRepo.findById(id_libro)
+                .orElseThrow(() -> new DatoNoExistenteEcxeption("El libro no existe en el sistema"));
+
+        if (boock.isIsDelete()) {
+
+            throw new DatoNoExistenteEcxeption("El libro no existe en el sistema");
+        }
+
+        categoryBoock cat = catBoockRepo.findById(id_cat)
+                .orElseThrow(() -> new DatoNoExistenteEcxeption("La categoria no existe en el sistema"));
+
+        if (cat.isIsDelete()) {
+            throw new DatoNoExistenteEcxeption("La categoria no existe en el sisema");
+        }
+
+        libro_categoria lc = libro_cat_repo.findById(id_cat_lib)
+                .orElseThrow(() -> new DatoNoExistenteEcxeption("El libro no tiene esa categoria"));
+
+        if (lc.isIsDelete()) {
+            throw new DatoNoExistenteEcxeption("El libro no tiene esa catgoria");
+        }
+        AuditableUtils.delete(lc, "prueba", "prueba");
+
+        libro_cat_repo.save(lc);
     }
 
 }

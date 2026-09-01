@@ -24,6 +24,7 @@ public interface usuarioRepository extends JpaRepository<usuario, Integer> {
            FROM usuario u
            
            WHERE (LOWER(u.email) = LOWER(:email))
+         
            
            """)
     public Optional<usuario> findByEmail(@Param(value = "email") String email);

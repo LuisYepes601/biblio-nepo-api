@@ -17,7 +17,7 @@ import java.util.List;
 public class LibroDtoReq {
 
     private String titulo;
-    
+
     private String subtitulo;
 
     private String isbn;
@@ -42,7 +42,13 @@ public class LibroDtoReq {
 
     private List<PalabraClaveDtoReq> palabras_claves;
 
-    public LibroDtoReq(String titulo, String subtitulo, String isbn, String editorial, LocalDate fechaPublicacion, Integer edicion, String descripcion, Integer id_formato_libro, List<CategoriaDtoReq> categorias, Long id_libro, Integer id_autor, List<TemaDtoReq> temas, List<PalabraClaveDtoReq> palabras_claves) {
+    private Integer id_idioma;
+    
+    private Integer id_tipo_libro;
+    
+    private String paisOrigen;
+
+    public LibroDtoReq(String titulo, String subtitulo, String isbn, String editorial, LocalDate fechaPublicacion, Integer edicion, String descripcion, Integer id_formato_libro, List<CategoriaDtoReq> categorias, Long id_libro, Integer id_autor, List<TemaDtoReq> temas, List<PalabraClaveDtoReq> palabras_claves, Integer id_idioma, Integer id_tipo_libro, String paisOrigen) {
         this.titulo = titulo;
         this.subtitulo = subtitulo;
         this.isbn = isbn;
@@ -56,7 +62,12 @@ public class LibroDtoReq {
         this.id_autor = id_autor;
         this.temas = temas;
         this.palabras_claves = palabras_claves;
+        this.id_idioma = id_idioma;
+        this.id_tipo_libro = id_tipo_libro;
+        this.paisOrigen = paisOrigen;
     }
+
+  
 
     public LibroDtoReq() {
     }
@@ -165,6 +176,28 @@ public class LibroDtoReq {
         this.palabras_claves = palabras_claves;
     }
 
-    
-    
+    public Integer getId_idioma() {
+        return id_idioma;
+    }
+
+    public void setId_idioma(Integer id_idioma) {
+        this.id_idioma = id_idioma;
+    }
+
+    public Integer getId_tipo_libro() {
+        return id_tipo_libro;
+    }
+
+    public void setId_tipo_libro(Integer id_tipo_libro) {
+        this.id_tipo_libro = id_tipo_libro;
+    }
+
+    public String getPaisOrigen() {
+        return paisOrigen;
+    }
+
+    public void setPaisOrigen(String paisOrigen) {
+        this.paisOrigen = paisOrigen;
+    }
+
 }

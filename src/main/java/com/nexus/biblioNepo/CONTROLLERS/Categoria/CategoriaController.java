@@ -15,6 +15,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -64,7 +65,6 @@ public class CategoriaController {
             @PathVariable(
                     name = "id_libro",
                     required = true) Long id_libro,
-        
             @RequestBody(required = true) List<@Valid CategoriaAsignarDto> categoriasAsignarDtos) {
 
         categoriaService.asignarCategoriaLibro(id_libro, categoriasAsignarDtos);
@@ -72,6 +72,27 @@ public class CategoriaController {
         return ResponseEntity
                 .ok()
                 .body(new BasicResponseDto("Las catgeorias han sido añaidas al libro con éxito"));
+    }
+
+    @Operation(description = "Operación encargada de eliminar catgeoria de un libro",
+            method = "DELETE")
+    @DeleteMapping()
+    public ResponseEntity<BasicResponseDto> deleteCategoriaByLibro(
+            @RequestParam(
+                    name = "id_libro",
+                    required = true) Long id_libro,
+            @RequestParam(
+                    name = "id_cat",
+                    required = true) Integer id_cat,
+            @RequestParam(
+                    name = "id_cat_libro",
+                    required = true) Integer id_cat_libro) {
+
+        categoriaService.EliminarCategoriaDeLibro(id_libro, id_cat, id_cat_libro);
+
+        return ResponseEntity
+                .ok()
+                .body(new BasicResponseDto("Se ha eliminado con éxito la categoria del libro"));
     }
 
 }

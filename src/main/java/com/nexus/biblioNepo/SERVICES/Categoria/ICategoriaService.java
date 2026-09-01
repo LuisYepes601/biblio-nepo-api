@@ -19,4 +19,6 @@ public interface ICategoriaService {
     public PageResponse<CategoriaDtoresp> getAll(String nombre, Pageable pageable);
 
     public void asignarCategoriaLibro(Long id_libro, List<CategoriaAsignarDto> categorias);
+
+    public void EliminarCategoriaDeLibro(Long id_libro, Integer id_cat,Integer id_cat_lib);
 }

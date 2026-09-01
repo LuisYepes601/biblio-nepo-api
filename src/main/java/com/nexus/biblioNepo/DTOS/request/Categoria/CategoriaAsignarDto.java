@@ -14,7 +14,7 @@ import jakarta.validation.constraints.Positive;
  */
 public class CategoriaAsignarDto {
 
-    @Schema(name = "id_categoria",
+    @Schema(name = "id",
             requiredMode = Schema.RequiredMode.REQUIRED)
     @Positive(message = "El id de la categoria debe de ser positivo")
     @NotNull(message = "Debe de selecionar al menos una categoria")

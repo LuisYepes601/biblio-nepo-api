@@ -1,0 +1,441 @@
+
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Libro creado | BiblioNepo</title>
+    </head>
+
+    <body style="
+          margin: 0;
+          padding: 0;
+          background-color: #f3f5f7;
+          font-family: Arial, Helvetica, sans-serif;
+          ">
+
+        <table width="100%" cellpadding="0" cellspacing="0" border="0"
+               style="background-color: #f3f5f7; padding: 40px 15px;">
+
+            <tr>
+                <td align="center">
+
+                    <!-- CONTENEDOR -->
+                    <table width="620" cellpadding="0" cellspacing="0" border="0"
+                           style="
+                           width: 100%;
+                           max-width: 620px;
+                           background-color: #ffffff;
+                           border-radius: 10px;
+                           overflow: hidden;
+                           border: 1px solid #e5e7eb;
+                           ">
+
+                        <!-- HEADER -->
+                        <tr>
+                            <td align="center"
+                                style="
+                                background-color: #173b6c;
+                                padding: 30px;
+                                ">
+
+                                <!-- LOGO -->
+                                <img
+                                    src="https://res.cloudinary.com/divhisdcx/image/upload/v1788201113/logosinfondo_epuiuj.jpg"
+                                    alt="BiblioNepo"
+                                    width="190"
+
+                                    style="
+                                    display: block;
+                                    width: 190px;
+                                    max-width: 100%;
+                                    height: auto;
+                                    margin: auto;
+                                    "
+                                    >
+
+                            </td>
+                        </tr>
+
+
+                        <!-- ESTADO -->
+                        <tr>
+                            <td style="
+                                background-color: #eef6ff;
+                                padding: 14px 25px;
+                                text-align: center;
+                                border-bottom: 1px solid #dbeafe;
+                                ">
+
+                                <p style="
+                                   margin: 0;
+                                   color: #173b6c;
+                                   font-size: 12px;
+                                   font-weight: bold;
+                                   letter-spacing: 1px;
+                                   ">
+                                    REGISTRO COMPLETADO CORRECTAMENTE
+                                </p>
+
+                            </td>
+                        </tr>
+
+
+                        <!-- CONTENIDO -->
+                        <tr>
+                            <td style="padding: 40px 45px;">
+
+                                <!-- SALUDO -->
+                                <p style="
+                                   margin: 0 0 8px;
+                                   color: #6b7280;
+                                   font-size: 14px;
+                                   ">
+                                    Hola,
+                                    <strong th:text="${nombreUsuario}">
+                                        Usuario
+                                    </strong>
+                                </p>
+
+
+                                <!-- TITULO -->
+                                <h1 style="
+                                    margin: 0 0 15px;
+                                    color: #173b6c;
+                                    font-size: 26px;
+                                    line-height: 1.3;
+                                    ">
+                                    El libro ha sido creado correctamente
+                                </h1>
+
+
+                                <p style="
+                                   margin: 0 0 30px;
+                                   color: #4b5563;
+                                   font-size: 14px;
+                                   line-height: 1.7;
+                                   ">
+                                    El siguiente libro ha sido registrado exitosamente
+                                    en el catálogo de BiblioNepo.
+                                </p>
+
+
+                                <!-- PORTADA + TITULO -->
+                                <table width="100%"
+                                       cellpadding="0"
+                                       cellspacing="0"
+                                       border="0"
+                                       style="
+                                       background-color: #f8fafc;
+                                       border: 1px solid #e5e7eb;
+                                       border-radius: 8px;
+                                       margin-bottom: 30px;
+                                       ">
+
+                                    <tr>
+
+                                        <!-- PORTADA -->
+                                        <td width="190"
+                                            valign="middle"
+                                            align="center"
+                                            style="padding: 25px 10px 25px 25px;">
+
+                                            <img
+                                                th:src="${urlPortada}"
+                                                src="URL_PORTADA_DEL_LIBRO"
+                                                alt="Portada del libro"
+                                                width="150"
+                                                style="
+                                                display: block;
+                                                width: 150px;
+                                                max-width: 150px;
+                                                height: 210px;
+                                                object-fit: cover;
+                                                border-radius: 4px;
+                                                border: 1px solid #d1d5db;
+                                                "
+                                                >
+
+                                        </td>
+
+
+                                        <!-- INFORMACIÓN PRINCIPAL -->
+                                        <td valign="middle"
+                                            style="padding: 25px 25px 25px 15px;">
+
+                                            <p style="
+                                               margin: 0 0 8px;
+                                               color: #6b7280;
+                                               font-size: 10px;
+                                               font-weight: bold;
+                                               text-transform: uppercase;
+                                               letter-spacing: 1px;
+                                               ">
+                                                Libro registrado
+                                            </p>
+
+
+                                            <h2 style="
+                                                margin: 0 0 12px;
+                                                color: #173b6c;
+                                                font-size: 21px;
+                                                line-height: 1.4;
+                                                "
+                                                th:text="${tituloLibro}">
+                                                Título del libro
+                                            </h2>
+
+
+                                            <p th:if="${subtitulo != null and !#strings.isEmpty(subtitulo)}"
+                                               th:text="${subtitulo}"
+                                               style="
+                                               margin: 0 0 15px;
+                                               color: #6b7280;
+                                               font-size: 13px;
+                                               line-height: 1.5;
+                                               ">
+                                                Subtítulo
+                                            </p>
+
+
+                                            <p style="
+                                               margin: 5px 0;
+                                               color: #4b5563;
+                                               font-size: 13px;
+                                               ">
+                                                <strong>ISBN:</strong>
+                                                <span th:text="${isbn}">
+                                                    ISBN
+                                                </span>
+                                            </p>
+
+
+                                            <p style="
+                                               margin: 5px 0;
+                                               color: #4b5563;
+                                               font-size: 13px;
+                                               ">
+                                                <strong>Editorial:</strong>
+                                                <span th:text="${editorial}">
+                                                    Editorial
+                                                </span>
+                                            </p>
+
+                                        </td>
+
+                                    </tr>
+
+                                </table>
+
+
+                                <!-- INFORMACION -->
+                                <h3 style="
+                                    margin: 0 0 15px;
+                                    color: #173b6c;
+                                    font-size: 16px;
+                                    ">
+                                    Información del libro
+                                </h3>
+
+
+                                <table width="100%"
+                                       cellpadding="0"
+                                       cellspacing="0"
+                                       border="0"
+                                       style="
+                                       border: 1px solid #e5e7eb;
+                                       border-radius: 7px;
+                                       margin-bottom: 28px;
+                                       ">
+
+                                    <tr>
+                                        <td style="
+                                            padding: 13px 17px;
+                                            border-bottom: 1px solid #e5e7eb;
+                                            color: #6b7280;
+                                            font-size: 13px;
+                                            width: 42%;
+                                            ">
+                                            ISBN
+                                        </td>
+
+                                        <td style="
+                                            padding: 13px 17px;
+                                            border-bottom: 1px solid #e5e7eb;
+                                            color: #374151;
+                                            font-size: 13px;
+                                            ">
+                                            <strong th:text="${isbn}">
+                                                ISBN
+                                            </strong>
+                                        </td>
+                                    </tr>
+
+
+                                    <tr>
+                                        <td style="
+                                            padding: 13px 17px;
+                                            border-bottom: 1px solid #e5e7eb;
+                                            color: #6b7280;
+                                            font-size: 13px;
+                                            ">
+                                            Editorial
+                                        </td>
+
+                                        <td style="
+                                            padding: 13px 17px;
+                                            border-bottom: 1px solid #e5e7eb;
+                                            color: #374151;
+                                            font-size: 13px;
+                                            ">
+                                            <strong th:text="${editorial}">
+                                                Editorial
+                                            </strong>
+                                        </td>
+                                    </tr>
+
+
+                                    <tr>
+                                        <td style="
+                                            padding: 13px 17px;
+                                            border-bottom: 1px solid #e5e7eb;
+                                            color: #6b7280;
+                                            font-size: 13px;
+                                            ">
+                                            Fecha de publicación
+                                        </td>
+
+                                        <td style="
+                                            padding: 13px 17px;
+                                            border-bottom: 1px solid #e5e7eb;
+                                            color: #374151;
+                                            font-size: 13px;
+                                            ">
+                                            <strong th:text="${fechaPublicacion}">
+                                                Fecha
+                                            </strong>
+                                        </td>
+                                    </tr>
+
+
+                                    <tr>
+                                        <td style="
+                                            padding: 13px 17px;
+                                            color: #6b7280;
+                                            font-size: 13px;
+                                            ">
+                                            Edición
+                                        </td>
+
+                                        <td style="
+                                            padding: 13px 17px;
+                                            color: #374151;
+                                            font-size: 13px;
+                                            ">
+                                            <strong th:text="${edicion}">
+                                                1
+                                            </strong>
+                                        </td>
+                                    </tr>
+
+                                </table>
+
+
+                                <!-- DESCRIPCION -->
+                                <div th:if="${descripcion != null and !#strings.isEmpty(descripcion)}">
+
+                                    <h3 style="
+                                        margin: 0 0 10px;
+                                        color: #173b6c;
+                                        font-size: 16px;
+                                        ">
+                                        Descripción
+                                    </h3>
+
+                                    <p th:text="${descripcion}"
+                                       style="
+                                       margin: 0 0 28px;
+                                       color: #6b7280;
+                                       font-size: 14px;
+                                       line-height: 1.7;
+                                       ">
+                                        Descripción del libro.
+                                    </p>
+
+                                </div>
+
+
+                                <!-- BOTON -->
+                                <table width="100%"
+                                       cellpadding="0"
+                                       cellspacing="0"
+                                       border="0">
+
+                                    <tr>
+                                        <td align="center">
+
+                                         
+                                            <a th:href="@{'https://biblionepo-api.onrender.com/api/libros/' + ${idLibro}}"
+                                               style="
+                                               display: inline-block;
+                                               background-color: #173b6c;
+                                               color: #ffffff;
+                                               text-decoration: none;
+                                               padding: 14px 30px;
+                                               border-radius: 5px;
+                                               font-size: 13px;
+                                               font-weight: bold;
+                                               ">
+                                                Consultar libro
+                                            </a>
+                                            
+
+
+                                        </td>
+                                    </tr>
+
+                                </table>
+
+                            </td>
+                        </tr>
+
+
+                        <!-- FOOTER -->
+                        <tr>
+                            <td align="center"
+                                style="
+                                background-color: #f8fafc;
+                                border-top: 1px solid #e5e7eb;
+                                padding: 24px 30px;
+                                ">
+
+                                <p style="
+                                   margin: 0 0 7px;
+                                   color: #6b7280;
+                                   font-size: 11px;
+                                   ">
+                                    Este mensaje fue enviado automáticamente por BiblioNepo.
+                                </p>
+
+                                <p style="
+                                   margin: 0;
+                                   color: #9ca3af;
+                                   font-size: 10px;
+                                   ">
+                                    © 2026 BiblioNepo. Todos los derechos reservados.
+                                </p>
+
+                            </td>
+                        </tr>
+
+                    </table>
+
+                </td>
+            </tr>
+
+        </table>
+
+    </body>
+</html>
+```

@@ -101,4 +101,88 @@ public class cloudinaryServices implements ICloudinaryService {
         return cloudinaryUploadResponse;
     }
 
+    @Override
+    public CloudinaryUploadResponse uploadPortadaLibro(MultipartFile portada, String nameFile) {
+
+        try {
+
+            Map<String, Object> response = cloudinary.uploader()
+                    .uploadLarge(
+                            portada.getInputStream(),
+                            CloudinaryFileUtils.portadaLibro(nameFile)
+                    );
+
+            System.out.println("RESPUESTA CLOUDINARY: " + response);
+
+            Object publicId = response.get("public_id");
+            Object secureUrl = response.get("secure_url");
+
+            if (publicId == null) {
+                throw new RuntimeException(
+                        "Cloudinary no devolvió public_id. Respuesta: " + response
+                );
+            }
+
+            if (secureUrl == null) {
+                throw new RuntimeException(
+                        "Cloudinary no devolvió secure_url. Respuesta: " + response
+                );
+            }
+
+            CloudinaryUploadResponse cloudinaryUploadResponse
+                    = new CloudinaryUploadResponse();
+
+            cloudinaryUploadResponse.setPublicId(publicId.toString());
+            cloudinaryUploadResponse.setSecureUrl(secureUrl.toString());
+
+            return cloudinaryUploadResponse;
+
+        } catch (IOException e) {
+
+            throw new RuntimeException(
+                    "Error al subir la portada a Cloudinary",
+                    e
+            );
+        }
+    }
+
+    @Override
+    public CloudinaryUploadResponse uploadLibro(MultipartFile libro, String nameFile) {
+
+        try {
+
+            Map<String, Object> response = cloudinary.uploader()
+                    .uploadLarge(
+                            libro.getInputStream(),
+                            CloudinaryFileUtils.libro(nameFile)
+                    );
+
+            System.out.println("RESPUESTA CLOUDINARY: " + response);
+
+            Object publicId = response.get("public_id");
+            Object secureUrl = response.get("secure_url");
+
+            if (publicId == null || secureUrl == null) {
+                throw new RuntimeException(
+                        "Cloudinary no devolvió public_id o secure_url. Respuesta: "
+                        + response
+                );
+            }
+
+            CloudinaryUploadResponse cloudinaryUploadResponse
+                    = new CloudinaryUploadResponse();
+
+            cloudinaryUploadResponse.setPublicId(publicId.toString());
+            cloudinaryUploadResponse.setSecureUrl(secureUrl.toString());
+
+            return cloudinaryUploadResponse;
+
+        } catch (IOException e) {
+
+            throw new RuntimeException(
+                    "Error al subir el libro a Cloudinary",
+                    e
+            );
+        }
+    }
 }

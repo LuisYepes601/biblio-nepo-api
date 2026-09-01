@@ -18,4 +18,8 @@ public interface ICloudinaryService {
     public void deleteFile(String public_id);
     
     public CloudinaryUploadResponse uploadFotoPerfil(MultipartFile file, String nameUser, String nameFile);
+    
+    public CloudinaryUploadResponse uploadPortadaLibro(MultipartFile portada, String nameFile);
+    
+    public CloudinaryUploadResponse uploadLibro(MultipartFile libro, String nameFile);
 }

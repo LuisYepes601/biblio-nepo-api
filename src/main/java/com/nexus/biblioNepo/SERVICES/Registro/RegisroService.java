@@ -14,6 +14,7 @@ import com.nexus.biblioNepo.REPOSITORIES.rolRepository;
 import com.nexus.biblioNepo.REPOSITORIES.tipoIdentificacionRepository;
 import com.nexus.biblioNepo.REPOSITORIES.usuarioRepository;
 import com.nexus.biblioNepo.SERVICES.Direcciones.IDireccionService;
+import com.nexus.biblioNepo.SERVICES.Email.EmailService;
 import com.nexus.biblioNepo.SERVICES.PasswordEncoder.PasswordEncoderService;
 import com.nexus.biblioNepo.SERVICES.cloudinary.ICloudinaryService;
 import java.util.Optional;
@@ -36,15 +37,17 @@ public class RegisroService implements IRegistroService {
     private ICloudinaryService cloudinaryService;
     private PasswordEncoderService passwordEncodeService;
     private IDireccionService direccionService;
+    private EmailService EmailService;
 
     @Autowired
-    public RegisroService(usuarioRepository usuarioRepo, rolRepository rolRepo, tipoIdentificacionRepository tipoIdentificacionRepo, ICloudinaryService cloudinaryService, PasswordEncoderService passwordEncodeService, IDireccionService direccionService) {
+    public RegisroService(usuarioRepository usuarioRepo, rolRepository rolRepo, tipoIdentificacionRepository tipoIdentificacionRepo, ICloudinaryService cloudinaryService, PasswordEncoderService passwordEncodeService, IDireccionService direccionService, EmailService EmailService) {
         this.usuarioRepo = usuarioRepo;
         this.rolRepo = rolRepo;
         this.tipoIdentificacionRepo = tipoIdentificacionRepo;
         this.cloudinaryService = cloudinaryService;
         this.passwordEncodeService = passwordEncodeService;
         this.direccionService = direccionService;
+        this.EmailService = EmailService;
     }
 
     @Override
@@ -98,6 +101,8 @@ public class RegisroService implements IRegistroService {
         }
 
         us.setPassword(passwordEncodeService.encriptarPassword(usuarioBasicoDtoReq.getPassword().trim()));
+        
+        EmailService.SendEmailRegistro(us);
 
         return usuarioRepo.save(us);
 
