@@ -122,7 +122,7 @@ public class LibroServiceAdmin implements IlibroServiceAdmin {
 
         CloudinaryUploadResponse response = cloudinaryService.uploadLibro(libro, libro.getOriginalFilename());
 
-        boock.setPublicIdArchivo(response.getSecureUrl());
+        boock.setArchivoUrl(response.getSecureUrl());
         boock.setPublicIdArchivo(response.getPublicId());
 
         AuditableUtils.create(boock, "prueba", "prueba");

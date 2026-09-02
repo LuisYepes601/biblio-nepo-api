@@ -1,437 +1,494 @@
-```html
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
-
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Libro creado | BiblioNepo</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BiblioNepo — La lectura es la clave para construir tu futuro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#F1EAD9;
+    --cream-2:#E9DFC9;
+    --ink:#1C2536;
+    --ink-soft:#3B4457;
+    --wood:#9A6A34;
+    --burgundy:#6E2A2A;
+    --paper:#FFFDF9;
+    --muted:#736C5C;
+    --line: rgba(28,37,54,0.14);
+    --radius: 2px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Inter', sans-serif;
+    color:var(--ink);
+    background:var(--paper);
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3, .display{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    line-height:1.08;
+    letter-spacing:-0.01em;
+  }
+  a{color:inherit; text-decoration:none;}
+  img{max-width:100%; display:block;}
+  button{font-family:inherit; cursor:pointer;}
+
+  /* ---------- NAV ---------- */
+  header{
+    display:flex; align-items:center; justify-content:space-between;
+    padding: 22px 48px;
+    background:var(--paper);
+    position:relative;
+    z-index:40;
+    border-bottom:1px solid var(--line);
+  }
+  .logo{ font-family:'Fraunces', serif; font-size:1.4rem; font-weight:600; color:var(--ink);}
+  nav.primary-nav{ display:flex; gap:36px; }
+  nav.primary-nav a{
+    font-size:0.94rem; color:var(--ink-soft); position:relative; padding-bottom:4px;
+  }
+  nav.primary-nav a.active{ color:var(--ink); }
+  nav.primary-nav a.active::after{
+    content:""; position:absolute; left:0; right:0; bottom:-23px; height:2px; background:var(--wood);
+  }
+  .nav-actions{ display:flex; align-items:center; gap:12px; }
+  .btn{
+    padding:11px 22px; font-size:0.88rem; font-weight:500; border-radius:var(--radius);
+    border:1px solid var(--ink); transition:all .18s ease;
+  }
+  .btn-fill{ background:var(--ink); color:var(--cream); }
+  .btn-fill:hover{ background:var(--ink-soft); }
+  .btn-outline{ background:transparent; color:var(--ink); }
+  .btn-outline:hover{ background:var(--ink); color:var(--cream); }
+  .nav-toggle{ display:none; flex-direction:column; gap:5px; background:none; border:none; }
+  .nav-toggle span{ width:22px; height:2px; background:var(--ink); display:block;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    display:grid;
+    grid-template-columns: minmax(320px, 34%) 1fr;
+    min-height: 640px;
+  }
+  .hero-copy{
+    background:var(--cream);
+    padding: 64px 56px 48px;
+    display:flex; flex-direction:column; justify-content:center;
+    position:relative;
+  }
+  .hero-eyebrow{
+    font-family:'Fraunces', serif; font-style:italic; font-size:1.05rem; color:var(--wood); margin-bottom:22px;
+  }
+  .hero-copy h1{
+    font-size: clamp(2.1rem, 3vw, 2.75rem);
+    color:var(--ink);
+    max-width: 420px;
+    transition: opacity .35s ease;
+  }
+  .hero-copy p.sub{
+    margin-top:22px; max-width:380px; color:var(--ink-soft); font-size:1rem; line-height:1.6;
+    transition: opacity .35s ease;
+  }
+  .hero-ctas{ display:flex; gap:14px; margin-top:34px; }
+  .hero-nav-controls{
+    margin-top:56px; display:flex; align-items:center; gap:18px;
+  }
+  .arrow-btn{
+    width:42px; height:42px; border-radius:50%; border:1px solid var(--ink);
+    background:transparent; display:flex; align-items:center; justify-content:center;
+    transition: background .18s ease, color .18s ease;
+  }
+  .arrow-btn:hover{ background:var(--ink); color:var(--cream); }
+  .hero-dots{ display:flex; gap:8px; }
+  .hero-dots span{
+    width:7px; height:7px; border-radius:50%; background:var(--line); border:1px solid var(--wood);
+    transition: background .2s ease;
+  }
+  .hero-dots span.active{ background:var(--wood); }
+
+  .hero-visual{
+    position:relative;
+    background-size:cover; background-position:center;
+    background-image:
+      linear-gradient(0deg, rgba(15,17,20,0.32), rgba(15,17,20,0.05) 45%),
+      url('https://images.unsplash.com/photo-1481627834876-b7833e8f5570?q=80&w=1600&auto=format&fit=crop');
+    transition: background-image .5s ease;
+    overflow:hidden;
+  }
+  .laptop-mock{
+    position:absolute; right:64px; bottom:52px; width:420px;
+    filter: drop-shadow(0 24px 40px rgba(0,0,0,0.35));
+  }
+  .laptop-screen{
+    background:#EFEAE0; border-radius:8px 8px 0 0; padding:14px 16px 40px;
+    border:8px solid #1a1a1a; border-bottom:none;
+  }
+  .laptop-screen .screen-topbar{
+    display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;
+  }
+  .laptop-screen .screen-topbar .brand{ font-family:'Fraunces',serif; font-size:0.72rem; font-weight:600; }
+  .laptop-screen .screen-topbar .count{ font-size:0.58rem; color:var(--muted); }
+  .laptop-screen h4{ font-size:0.72rem; font-weight:600; margin-bottom:8px; font-family:'Inter';}
+  .mini-grid{ display:grid; grid-template-columns:repeat(6,1fr); gap:6px; }
+  .mini-book{ aspect-ratio:2/3; border-radius:2px; }
+  .laptop-base{
+    height:12px; background:linear-gradient(#2a2a2a,#111); border-radius:0 0 10px 10px;
+  }
+  .laptop-base::after{
+    content:""; display:block; width:70px; height:4px; background:#444; margin:0 auto; border-radius:0 0 4px 4px;
+  }
+  .float-stat{
+    position:absolute; left:56px; top:56px; background:var(--paper);
+    padding:16px 20px; border-radius:2px; box-shadow:0 14px 30px rgba(20,20,10,0.18);
+    max-width:190px;
+  }
+  .float-stat .num{ font-family:'Fraunces',serif; font-size:1.6rem; color:var(--ink); }
+  .float-stat .label{ font-size:0.78rem; color:var(--muted); margin-top:2px; }
+
+  /* ---------- SECTION SHARED ---------- */
+  section{ padding: 96px 56px; }
+  .section-head{ display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:48px; gap:24px; flex-wrap:wrap;}
+  .section-head h2{ font-size: clamp(1.8rem, 2.4vw, 2.3rem); max-width:520px; }
+  .section-head p{ color:var(--muted); max-width:360px; font-size:0.95rem; line-height:1.6; }
+
+  /* ---------- CATALOGO ---------- */
+  .catalogo{ background:var(--paper); }
+  .filter-tabs{ display:flex; gap:10px; margin-bottom:36px; flex-wrap:wrap; }
+  .filter-tabs button{
+    padding:9px 18px; border:1px solid var(--line); background:transparent; border-radius:20px;
+    font-size:0.85rem; color:var(--ink-soft); transition:all .18s ease;
+  }
+  .filter-tabs button.active{ background:var(--ink); color:var(--cream); border-color:var(--ink); }
+  .book-grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(160px,1fr)); gap:26px; }
+  .book-card{ cursor:default; }
+  .book-cover{
+    aspect-ratio:2/3; border-radius:2px; position:relative; overflow:hidden;
+    display:flex; align-items:flex-end; padding:14px;
+    box-shadow: 0 10px 18px rgba(0,0,0,0.12);
+    transition: transform .25s ease;
+  }
+  .book-card:hover .book-cover{ transform:translateY(-6px); }
+  .book-cover span{ color:#fff; font-size:0.78rem; font-family:'Fraunces',serif; line-height:1.3; }
+  .book-meta{ margin-top:10px; }
+  .book-meta .title{ font-size:0.88rem; font-weight:600; }
+  .book-meta .author{ font-size:0.78rem; color:var(--muted); margin-top:2px; }
+
+  /* ---------- COMUNIDAD ---------- */
+  .comunidad{ background:var(--ink); color:var(--cream); }
+  .comunidad .section-head h2{ color:var(--cream); }
+  .comunidad .section-head p{ color:#B9BECB; }
+  .stat-row{ display:grid; grid-template-columns:repeat(4,1fr); gap:32px; border-top:1px solid rgba(255,255,255,0.14); padding-top:40px; }
+  .stat-row .num{ font-family:'Fraunces',serif; font-size:2.4rem; }
+  .stat-row .label{ font-size:0.85rem; color:#B9BECB; margin-top:6px; }
+
+  /* ---------- SOBRE NOSOTROS ---------- */
+  .about{ display:grid; grid-template-columns:1fr 1fr; gap:72px; align-items:center; background:var(--cream-2); }
+  .about-photo{
+    aspect-ratio:4/5; border-radius:2px; background-size:cover; background-position:center;
+    background-image:url('https://images.unsplash.com/photo-1521587760476-6c12a4b040da?q=80&w=1200&auto=format&fit=crop');
+  }
+  .about-text p{ color:var(--ink-soft); line-height:1.75; margin-top:18px; max-width:460px; }
+
+  /* ---------- CONTACTO / FOOTER ---------- */
+  footer{ background:var(--paper); padding:80px 56px 32px; border-top:1px solid var(--line); }
+  .footer-grid{ display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:48px; margin-bottom:56px;}
+  .footer-grid h5{ font-size:0.82rem; text-transform:uppercase; letter-spacing:0.04em; color:var(--muted); margin-bottom:16px; font-weight:600;}
+  .footer-grid ul{ list-style:none; display:flex; flex-direction:column; gap:10px; }
+  .footer-grid ul a{ font-size:0.9rem; color:var(--ink-soft); }
+  .footer-grid ul a:hover{ color:var(--ink); }
+  .footer-bottom{ display:flex; justify-content:space-between; padding-top:24px; border-top:1px solid var(--line); font-size:0.8rem; color:var(--muted); flex-wrap:wrap; gap:12px;}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 900px){
+    header{ padding:18px 24px; }
+    nav.primary-nav{ display:none; }
+    .nav-toggle{ display:flex; }
+    .hero{ grid-template-columns:1fr; }
+    .hero-visual{ min-height:420px; }
+    .laptop-mock{ width:78%; right:auto; left:50%; transform:translateX(-50%); bottom:28px; }
+    .float-stat{ left:24px; top:24px; }
+    section{ padding:64px 24px; }
+    .about{ grid-template-columns:1fr; }
+    .stat-row{ grid-template-columns:repeat(2,1fr); }
+    .footer-grid{ grid-template-columns:1fr 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ transition:none !important; }
+  }
+</style>
 </head>
-
-<body style="
-    margin: 0;
-    padding: 0;
-    background-color: #f3f5f7;
-    font-family: Arial, Helvetica, sans-serif;
-">
-
-<table width="100%" cellpadding="0" cellspacing="0" border="0"
-       style="background-color: #f3f5f7; padding: 40px 15px;">
-
-    <tr>
-        <td align="center">
-
-            <!-- CONTENEDOR -->
-            <table width="620" cellpadding="0" cellspacing="0" border="0"
-                   style="
-                       width: 100%;
-                       max-width: 620px;
-                       background-color: #ffffff;
-                       border-radius: 10px;
-                       overflow: hidden;
-                       border: 1px solid #e5e7eb;
-                   ">
-
-                <!-- HEADER -->
-                <tr>
-                    <td align="center"
-                        style="
-                            background-color: #173b6c;
-                            padding: 30px;
-                        ">
-
-                        <!-- LOGO -->
-                        <img
-                            src="TU_URL_DEL_LOGO_CLOUDINARY"
-                            alt="BiblioNepo"
-                            width="190"
-                            style="
-                                display: block;
-                                width: 190px;
-                                max-width: 100%;
-                                height: auto;
-                                margin: auto;
-                            "
-                        >
-
-                    </td>
-                </tr>
-
-
-                <!-- ESTADO -->
-                <tr>
-                    <td style="
-                        background-color: #eef6ff;
-                        padding: 14px 25px;
-                        text-align: center;
-                        border-bottom: 1px solid #dbeafe;
-                    ">
-
-                        <p style="
-                            margin: 0;
-                            color: #173b6c;
-                            font-size: 12px;
-                            font-weight: bold;
-                            letter-spacing: 1px;
-                        ">
-                            REGISTRO COMPLETADO CORRECTAMENTE
-                        </p>
-
-                    </td>
-                </tr>
-
-
-                <!-- CONTENIDO -->
-                <tr>
-                    <td style="padding: 40px 45px;">
-
-                        <!-- SALUDO -->
-                        <p style="
-                            margin: 0 0 8px;
-                            color: #6b7280;
-                            font-size: 14px;
-                        ">
-                            Hola,
-                            <strong th:text="${nombreUsuario}">
-                                Usuario
-                            </strong>
-                        </p>
-
-
-                        <!-- TITULO -->
-                        <h1 style="
-                            margin: 0 0 15px;
-                            color: #173b6c;
-                            font-size: 26px;
-                            line-height: 1.3;
-                        ">
-                            El libro ha sido creado correctamente
-                        </h1>
-
-
-                        <p style="
-                            margin: 0 0 30px;
-                            color: #4b5563;
-                            font-size: 14px;
-                            line-height: 1.7;
-                        ">
-                            El siguiente libro ha sido registrado exitosamente
-                            en el catálogo de BiblioNepo.
-                        </p>
-
-
-                        <!-- PORTADA + TITULO -->
-                        <table width="100%"
-                               cellpadding="0"
-                               cellspacing="0"
-                               border="0"
-                               style="
-                                   background-color: #f8fafc;
-                                   border: 1px solid #e5e7eb;
-                                   border-radius: 8px;
-                                   margin-bottom: 30px;
-                               ">
-
-                            <tr>
-
-                                <!-- PORTADA -->
-                                <td width="190"
-                                    valign="middle"
-                                    align="center"
-                                    style="padding: 25px 10px 25px 25px;">
-
-                                    <img
-                                        th:src="${urlPortada}"
-                                        src="URL_PORTADA_DEL_LIBRO"
-                                        alt="Portada del libro"
-                                        width="150"
-                                        style="
-                                            display: block;
-                                            width: 150px;
-                                            max-width: 150px;
-                                            height: 210px;
-                                            object-fit: cover;
-                                            border-radius: 4px;
-                                            border: 1px solid #d1d5db;
-                                        "
-                                    >
-
-                                </td>
-
-
-                                <!-- INFORMACIÓN PRINCIPAL -->
-                                <td valign="middle"
-                                    style="padding: 25px 25px 25px 15px;">
-
-                                    <p style="
-                                        margin: 0 0 8px;
-                                        color: #6b7280;
-                                        font-size: 10px;
-                                        font-weight: bold;
-                                        text-transform: uppercase;
-                                        letter-spacing: 1px;
-                                    ">
-                                        Libro registrado
-                                    </p>
-
-
-                                    <h2 style="
-                                        margin: 0 0 12px;
-                                        color: #173b6c;
-                                        font-size: 21px;
-                                        line-height: 1.4;
-                                    "
-                                    th:text="${tituloLibro}">
-                                        Título del libro
-                                    </h2>
-
-
-                                    <p th:if="${subtitulo != null and !#strings.isEmpty(subtitulo)}"
-                                       th:text="${subtitulo}"
-                                       style="
-                                           margin: 0 0 15px;
-                                           color: #6b7280;
-                                           font-size: 13px;
-                                           line-height: 1.5;
-                                       ">
-                                        Subtítulo
-                                    </p>
-
-
-                                    <p style="
-                                        margin: 5px 0;
-                                        color: #4b5563;
-                                        font-size: 13px;
-                                    ">
-                                        <strong>ISBN:</strong>
-                                        <span th:text="${isbn}">
-                                            ISBN
-                                        </span>
-                                    </p>
-
-
-                                    <p style="
-                                        margin: 5px 0;
-                                        color: #4b5563;
-                                        font-size: 13px;
-                                    ">
-                                        <strong>Editorial:</strong>
-                                        <span th:text="${editorial}">
-                                            Editorial
-                                        </span>
-                                    </p>
-
-                                </td>
-
-                            </tr>
-
-                        </table>
-
-
-                        <!-- INFORMACION -->
-                        <h3 style="
-                            margin: 0 0 15px;
-                            color: #173b6c;
-                            font-size: 16px;
-                        ">
-                            Información del libro
-                        </h3>
-
-
-                        <table width="100%"
-                               cellpadding="0"
-                               cellspacing="0"
-                               border="0"
-                               style="
-                                   border: 1px solid #e5e7eb;
-                                   border-radius: 7px;
-                                   margin-bottom: 28px;
-                               ">
-
-                            <tr>
-                                <td style="
-                                    padding: 13px 17px;
-                                    border-bottom: 1px solid #e5e7eb;
-                                    color: #6b7280;
-                                    font-size: 13px;
-                                    width: 42%;
-                                ">
-                                    ISBN
-                                </td>
-
-                                <td style="
-                                    padding: 13px 17px;
-                                    border-bottom: 1px solid #e5e7eb;
-                                    color: #374151;
-                                    font-size: 13px;
-                                ">
-                                    <strong th:text="${isbn}">
-                                        ISBN
-                                    </strong>
-                                </td>
-                            </tr>
-
-
-                            <tr>
-                                <td style="
-                                    padding: 13px 17px;
-                                    border-bottom: 1px solid #e5e7eb;
-                                    color: #6b7280;
-                                    font-size: 13px;
-                                ">
-                                    Editorial
-                                </td>
-
-                                <td style="
-                                    padding: 13px 17px;
-                                    border-bottom: 1px solid #e5e7eb;
-                                    color: #374151;
-                                    font-size: 13px;
-                                ">
-                                    <strong th:text="${editorial}">
-                                        Editorial
-                                    </strong>
-                                </td>
-                            </tr>
-
-
-                            <tr>
-                                <td style="
-                                    padding: 13px 17px;
-                                    border-bottom: 1px solid #e5e7eb;
-                                    color: #6b7280;
-                                    font-size: 13px;
-                                ">
-                                    Fecha de publicación
-                                </td>
-
-                                <td style="
-                                    padding: 13px 17px;
-                                    border-bottom: 1px solid #e5e7eb;
-                                    color: #374151;
-                                    font-size: 13px;
-                                ">
-                                    <strong th:text="${fechaPublicacion}">
-                                        Fecha
-                                    </strong>
-                                </td>
-                            </tr>
-
-
-                            <tr>
-                                <td style="
-                                    padding: 13px 17px;
-                                    color: #6b7280;
-                                    font-size: 13px;
-                                ">
-                                    Edición
-                                </td>
-
-                                <td style="
-                                    padding: 13px 17px;
-                                    color: #374151;
-                                    font-size: 13px;
-                                ">
-                                    <strong th:text="${edicion}">
-                                        1
-                                    </strong>
-                                </td>
-                            </tr>
-
-                        </table>
-
-
-                        <!-- DESCRIPCION -->
-                        <div th:if="${descripcion != null and !#strings.isEmpty(descripcion)}">
-
-                            <h3 style="
-                                margin: 0 0 10px;
-                                color: #173b6c;
-                                font-size: 16px;
-                            ">
-                                Descripción
-                            </h3>
-
-                            <p th:text="${descripcion}"
-                               style="
-                                   margin: 0 0 28px;
-                                   color: #6b7280;
-                                   font-size: 14px;
-                                   line-height: 1.7;
-                               ">
-                                Descripción del libro.
-                            </p>
-
-                        </div>
-
-
-                        <!-- BOTON -->
-                        <table width="100%"
-                               cellpadding="0"
-                               cellspacing="0"
-                               border="0">
-
-                            <tr>
-                                <td align="center">
-
-                                    <a th:href="${urlLibro}"
-                                       style="
-                                           display: inline-block;
-                                           background-color: #173b6c;
-                                           color: #ffffff;
-                                           text-decoration: none;
-                                           padding: 14px 30px;
-                                           border-radius: 5px;
-                                           font-size: 13px;
-                                           font-weight: bold;
-                                       ">
-                                        Consultar libro
-                                    </a>
-
-                                </td>
-                            </tr>
-
-                        </table>
-
-                    </td>
-                </tr>
-
-
-                <!-- FOOTER -->
-                <tr>
-                    <td align="center"
-                        style="
-                            background-color: #f8fafc;
-                            border-top: 1px solid #e5e7eb;
-                            padding: 24px 30px;
-                        ">
-
-                        <p style="
-                            margin: 0 0 7px;
-                            color: #6b7280;
-                            font-size: 11px;
-                        ">
-                            Este mensaje fue enviado automáticamente por BiblioNepo.
-                        </p>
-
-                        <p style="
-                            margin: 0;
-                            color: #9ca3af;
-                            font-size: 10px;
-                        ">
-                            © 2026 BiblioNepo. Todos los derechos reservados.
-                        </p>
-
-                    </td>
-                </tr>
-
-            </table>
-
-        </td>
-    </tr>
-
-</table>
+<body>
+
+<header>
+  <div class="logo">BiblioNepo</div>
+  <nav class="primary-nav">
+    <a href="#inicio" class="active">Inicio</a>
+    <a href="#catalogo">Catálogo</a>
+    <a href="#comunidad">Comunidad</a>
+    <a href="#nosotros">Sobre Nosotros</a>
+    <a href="#contacto">Contacto</a>
+  </nav>
+  <div class="nav-actions">
+    <a href="#catalogo" class="btn btn-fill">Empezar a Leer</a>
+    <a href="#" class="btn btn-outline">Iniciar Sesión</a>
+    <button class="nav-toggle" aria-label="Abrir menú"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<section id="inicio" class="hero" style="padding:0;">
+  <div class="hero-copy">
+    <div class="hero-eyebrow">BiblioNepo</div>
+    <h1 id="heroTitle">La lectura es la clave para construir tu futuro.</h1>
+    <p class="sub" id="heroSub">Explora miles de títulos, gestiona tus préstamos y únete a una comunidad que lee contigo, desde cualquier lugar.</p>
+    <div class="hero-ctas">
+      <a href="#catalogo" class="btn btn-fill">Ver catálogo</a>
+      <a href="#nosotros" class="btn btn-outline">Cómo funciona</a>
+    </div>
+    <div class="hero-nav-controls">
+      <button class="arrow-btn" id="prevSlide" aria-label="Anterior">←</button>
+      <button class="arrow-btn" id="nextSlide" aria-label="Siguiente">→</button>
+      <div class="hero-dots" id="heroDots"></div>
+    </div>
+  </div>
+  <div class="hero-visual" id="heroVisual">
+    <div class="float-stat">
+      <div class="num">1,240+</div>
+      <div class="label">libros disponibles en la colección</div>
+    </div>
+    <div class="laptop-mock">
+      <div class="laptop-screen">
+        <div class="screen-topbar">
+          <span class="brand">BiblioNepo</span>
+          <span class="count">42 títulos</span>
+        </div>
+        <h4>Colección BiblioNepo</h4>
+        <div class="mini-grid" id="miniGrid"></div>
+      </div>
+      <div class="laptop-base"></div>
+    </div>
+  </div>
+</section>
+
+<section id="catalogo" class="catalogo">
+  <div class="section-head">
+    <h2>Un catálogo que crece con cada lector.</h2>
+    <p>Filtra por categoría y encuentra el próximo libro que quieras devorar en una tarde.</p>
+  </div>
+  <div class="filter-tabs" id="filterTabs">
+    <button class="active" data-cat="todos">Todos</button>
+    <button data-cat="ficcion">Ficción</button>
+    <button data-cat="historia">Historia</button>
+    <button data-cat="ciencia">Ciencia</button>
+    <button data-cat="poesia">Poesía</button>
+  </div>
+  <div class="book-grid" id="bookGrid"></div>
+</section>
+
+<section id="comunidad" class="comunidad">
+  <div class="section-head">
+    <h2>No leas solo. Lee en comunidad.</h2>
+    <p>Clubes de lectura, foros de discusión y recomendaciones hechas por otros lectores como tú.</p>
+  </div>
+  <div class="stat-row">
+    <div><div class="num">3,600</div><div class="label">lectores activos</div></div>
+    <div><div class="num">128</div><div class="label">clubes de lectura</div></div>
+    <div><div class="num">1,240</div><div class="label">títulos disponibles</div></div>
+    <div><div class="num">98%</div><div class="label">devoluciones a tiempo</div></div>
+  </div>
+</section>
+
+<section id="nosotros" class="about">
+  <div class="about-photo"></div>
+  <div class="about-text">
+    <h2>Sobre Nosotros</h2>
+    <p>BiblioNepo nació como un proyecto para acercar la lectura a estudiantes que no siempre tienen fácil acceso a una biblioteca física. Digitalizamos catálogos, gestionamos préstamos y construimos un espacio donde pedir, leer y devolver un libro es simple.</p>
+    <p>Detrás de cada préstamo hay un sistema pensado para bibliotecarios y lectores por igual: control de inventario, historial de préstamos y recomendaciones que se ajustan a lo que ya has leído.</p>
+  </div>
+</section>
+
+<section id="contacto" style="padding-bottom:0;">
+  <div class="section-head">
+    <h2>Hablemos.</h2>
+    <p>¿Dudas sobre préstamos, catálogo o tu cuenta? Escríbenos.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="logo" style="margin-bottom:10px;">BiblioNepo</div>
+      <p style="color:var(--muted); font-size:0.88rem; max-width:260px; line-height:1.6;">Un sistema de gestión bibliotecaria para leer, prestar y descubrir sin fricción.</p>
+    </div>
+    <div>
+      <h5>Navegación</h5>
+      <ul>
+        <li><a href="#inicio">Inicio</a></li>
+        <li><a href="#catalogo">Catálogo</a></li>
+        <li><a href="#comunidad">Comunidad</a></li>
+        <li><a href="#nosotros">Sobre Nosotros</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>Cuenta</h5>
+      <ul>
+        <li><a href="#">Iniciar sesión</a></li>
+        <li><a href="#">Crear cuenta</a></li>
+        <li><a href="#">Mis préstamos</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>Contacto</h5>
+      <ul>
+        <li><a href="mailto:hola@biblionepo.com">hola@biblionepo.com</a></li>
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">GitHub</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 BiblioNepo. Todos los derechos reservados.</span>
+    <span>Hecho para lectores.</span>
+  </div>
+</footer>
+
+<script>
+  // ---------- Book data (colores tipo lomo de libro, sin usar imágenes externas) ----------
+  const palette = ['#6E2A2A','#1C2536','#9A6A34','#3B5B45','#4A3B6B','#7A4A2A','#2E4A5E','#5C2E4A'];
+  const books = [
+    {title:"El jardín de las horas", author:"M. Restrepo", cat:"ficcion"},
+    {title:"Crónicas del Caribe", author:"J. Salcedo", cat:"historia"},
+    {title:"Átomos y silencio", author:"L. Peña", cat:"ciencia"},
+    {title:"Versos de sal", author:"C. Ibarra", cat:"poesia"},
+    {title:"La ciudad sumergida", author:"R. Duarte", cat:"ficcion"},
+    {title:"Cartas desde el puerto", author:"A. Nieto", cat:"historia"},
+    {title:"El código del río", author:"S. Vargas", cat:"ciencia"},
+    {title:"Cenizas y luz", author:"P. Rincón", cat:"poesia"},
+    {title:"Los que llegaron tarde", author:"D. Marín", cat:"ficcion"},
+    {title:"Manual del observador", author:"F. Cortés", cat:"ciencia"},
+    {title:"Bitácora del olvido", author:"N. Osorio", cat:"historia"},
+    {title:"Once poemas breves", author:"E. Cepeda", cat:"poesia"}
+  ];
+
+  const bookGrid = document.getElementById('bookGrid');
+  const miniGrid = document.getElementById('miniGrid');
+
+  function renderBooks(filter){
+    bookGrid.innerHTML = '';
+    books
+      .filter(b => filter === 'todos' || b.cat === filter)
+      .forEach((b, i) => {
+        const color = palette[i % palette.length];
+        const card = document.createElement('div');
+        card.className = 'book-card';
+        card.innerHTML = `
+          <div class="book-cover" style="background:${color};">
+            <span>${b.title}</span>
+          </div>
+          <div class="book-meta">
+            <div class="title">${b.title}</div>
+            <div class="author">${b.author}</div>
+          </div>`;
+        bookGrid.appendChild(card);
+      });
+  }
+
+  function renderMiniGrid(){
+    miniGrid.innerHTML = '';
+    books.slice(0,12).forEach((b,i) => {
+      const el = document.createElement('div');
+      el.className = 'mini-book';
+      el.style.background = palette[i % palette.length];
+      miniGrid.appendChild(el);
+    });
+  }
+
+  document.getElementById('filterTabs').addEventListener('click', (e) => {
+    if(e.target.tagName !== 'BUTTON') return;
+    document.querySelectorAll('#filterTabs button').forEach(b => b.classList.remove('active'));
+    e.target.classList.add('active');
+    renderBooks(e.target.dataset.cat);
+  });
+
+  renderBooks('todos');
+  renderMiniGrid();
+
+  // ---------- Hero carousel ----------
+  const slides = [
+    {
+      title: "La lectura es la clave para construir tu futuro.",
+      sub: "Explora miles de títulos, gestiona tus préstamos y únete a una comunidad que lee contigo, desde cualquier lugar.",
+      img: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?q=80&w=1600&auto=format&fit=crop"
+    },
+    {
+      title: "Cada préstamo empieza con una búsqueda simple.",
+      sub: "Encuentra el libro exacto por título, autor o categoría en segundos, sin filas ni fichas de papel.",
+      img: "https://images.unsplash.com/photo-1507842217343-583bb7270b66?q=80&w=1600&auto=format&fit=crop"
+    },
+    {
+      title: "Devuelve, reserva y descubre en un solo lugar.",
+      sub: "Tu historial de lectura te ayuda a encontrar el siguiente libro que realmente vas a terminar.",
+      img: "https://images.unsplash.com/photo-1495446815901-a7297e633e8d?q=80&w=1600&auto=format&fit=crop"
+    }
+  ];
+
+  let current = 0;
+  const heroTitle = document.getElementById('heroTitle');
+  const heroSub = document.getElementById('heroSub');
+  const heroVisual = document.getElementById('heroVisual');
+  const dotsWrap = document.getElementById('heroDots');
+
+  slides.forEach((_, i) => {
+    const dot = document.createElement('span');
+    if(i === 0) dot.classList.add('active');
+    dot.addEventListener('click', () => goToSlide(i));
+    dotsWrap.appendChild(dot);
+  });
+
+  function updateSlide(){
+    const s = slides[current];
+    heroTitle.style.opacity = 0;
+    heroSub.style.opacity = 0;
+    setTimeout(() => {
+      heroTitle.textContent = s.title;
+      heroSub.textContent = s.sub;
+      heroTitle.style.opacity = 1;
+      heroSub.style.opacity = 1;
+    }, 180);
+    heroVisual.style.backgroundImage =
+      `linear-gradient(0deg, rgba(15,17,20,0.32), rgba(15,17,20,0.05) 45%), url('${s.img}')`;
+    [...dotsWrap.children].forEach((d, i) => d.classList.toggle('active', i === current));
+  }
+
+  function goToSlide(i){ current = i; updateSlide(); }
+  document.getElementById('nextSlide').addEventListener('click', () => {
+    current = (current + 1) % slides.length; updateSlide();
+  });
+  document.getElementById('prevSlide').addEventListener('click', () => {
+    current = (current - 1 + slides.length) % slides.length; updateSlide();
+  });
+
+  setInterval(() => {
+    current = (current + 1) % slides.length; updateSlide();
+  }, 7000);
+
+  // ---------- Mobile nav toggle ----------
+  document.querySelector('.nav-toggle').addEventListener('click', () => {
+    const nav = document.querySelector('.primary-nav');
+    const isOpen = nav.style.display === 'flex';
+    nav.style.display = isOpen ? 'none' : 'flex';
+    nav.style.flexDirection = 'column';
+    nav.style.position = 'absolute';
+    nav.style.top = '68px';
+    nav.style.left = '0';
+    nav.style.right = '0';
+    nav.style.background = 'var(--paper)';
+    nav.style.padding = '20px 24px';
+    nav.style.borderBottom = '1px solid var(--line)';
+  });
+</script>
 
 </body>
 </html>
-```

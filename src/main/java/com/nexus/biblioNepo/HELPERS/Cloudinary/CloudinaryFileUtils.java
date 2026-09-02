@@ -102,7 +102,7 @@ public class CloudinaryFileUtils {
         Map<String, Object> utils = new HashMap<>();
 
         utils.put("public_id", "libro/" + nameFile);
-        utils.put("resource_type", "raw");
+        utils.put("resource_type", "image");
 
         return utils;
     }

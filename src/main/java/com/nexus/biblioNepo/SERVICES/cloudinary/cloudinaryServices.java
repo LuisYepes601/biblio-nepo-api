@@ -88,7 +88,7 @@ public class cloudinaryServices implements ICloudinaryService {
         try {
 
             response = cloudinary.uploader()
-                    .uploadLarge(file, CloudinaryFileUtils.ProfilePhtotoUser(nameUser, nameFile));
+                    .uploadLarge(file.getInputStream(), CloudinaryFileUtils.ProfilePhtotoUser(nameUser, nameFile));
 
         } catch (IOException e) {
         }
