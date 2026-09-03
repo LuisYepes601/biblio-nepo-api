@@ -37,7 +37,7 @@ public interface BoockRepository extends JpaRepository<Boock, Long> {
     public Optional<Boock> existeLibroByNombre(@Param(value = "nombre") String nombre);
 
     @Query("""
-           SELECT NEW com.nexus.biblioNepo.DTOS.response.Libro.LibroAdminDtoResp(
+           SELECT DISTINCT NEW  com.nexus.biblioNepo.DTOS.response.Libro.LibroAdminDtoResp(
            lb.id,
            lb.titulo,
            lb.subtitulo,

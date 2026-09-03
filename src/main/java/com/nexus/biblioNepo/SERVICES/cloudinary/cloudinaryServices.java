@@ -60,24 +60,20 @@ public class cloudinaryServices implements ICloudinaryService {
 
     @Override
     public void deleteFile(String public_id) {
-
+        if (public_id == null || public_id.isBlank()) {
+            return; // nada que borrar
+        }
         try {
-
-            Map<String, Object> response = cloudinary.
-                    uploader()
-                    .destroy(public_id,
-                            ObjectUtils.emptyMap());
-
-            if (!"ok".equals(response.get("result").toString())) {
-
-                throw new deleteFileCloudinary("Error al eliminar el archivo");
+            Map<String, Object> response = cloudinary
+                    .uploader()
+                    .destroy(public_id, ObjectUtils.emptyMap());
+            String result = String.valueOf(response.get("result"));
+            if (!"ok".equals(result) && !"not found".equals(result)) {
+                throw new deleteFileCloudinary("Error al eliminar el archivo: " + result);
             }
-
         } catch (IOException e) {
-
             throw new deleteFileCloudinary("Error al eliminar el archivo");
         }
-
     }
 
     @Override

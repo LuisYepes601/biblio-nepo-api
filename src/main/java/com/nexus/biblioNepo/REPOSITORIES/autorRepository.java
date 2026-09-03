@@ -25,7 +25,7 @@ import org.springframework.stereotype.Repository;
 public interface autorRepository extends JpaRepository<Autor, Integer> {
 
     @Query("""
-           SELECT NEW com.nexus.biblioNepo.DTOS.response.Autors.AutorAdminDtoResp(
+           SELECT DISTINCT NEW com.nexus.biblioNepo.DTOS.response.Autors.AutorAdminDtoResp(
            
            a.id,
            a.nombre,
@@ -47,10 +47,10 @@ public interface autorRepository extends JpaRepository<Autor, Integer> {
            LEFT JOIN b.categorias cbti
            LEFT JOIN cbti.categoryBoock cb
            
-           WHERE (:name IS NULL OR a.nombre LIKE CONCAT(LOWER(CAST(:name AS string)), '%'))
+           WHERE (:name IS NULL OR LOWER(a.nombre) LIKE CONCAT(LOWER(CAST(:name AS string)), '%'))
            AND (:id_pais IS NULL OR p.id = :id_pais)
            AND (:is_delete IS NULL OR p.isDelete = :is_delete)
-           AND (:name_boock IS NULL OR b.titulo = :name_boock)
+           AND (:name_boock IS NULL OR LOWER(b.titulo) LIKE CONCAT(LOWER(CAST(:name_boock AS string)), '%'))
            AND (:id_categoria_boock IS NULL OR  cb.id = :id_categoria_boock)
            AND (:excluyed_id IS NULL OR a.id <> :excluyed_id)
            

@@ -16,6 +16,7 @@ import com.nexus.biblioNepo.GLOBALEXCEPTIONHANDLER.exceptions.NoDatosQueMostrarE
 import com.nexus.biblioNepo.REPOSITORIES.BoockRepository;
 import com.nexus.biblioNepo.REPOSITORIES.generoLibroRepository;
 import com.nexus.biblioNepo.REPOSITORIES.libro_genero_repository;
+import com.nexus.biblioNepo.UTILS.AuditableUtils;
 import com.nexus.biblioNepo.UTILS.PageResponseUtils;
 import java.util.List;
 import java.util.Optional;
@@ -81,7 +82,7 @@ public class GeneroLibroService implements IGeneroLibroService {
 
                     if (existe.isPresent()) {
 
-                        throw new DatoYaExistenteException("No sue pueden repetir generos en el libro");
+                        throw new DatoYaExistenteException("No se pueden repetir generos en el libro");
 
                     }
 
@@ -89,6 +90,7 @@ public class GeneroLibroService implements IGeneroLibroService {
                     lg.setBoock(Libro);
                     lg.setGeneroLibro(gl);
 
+                    AuditableUtils.create(lg, "prueba", "prueba");
                     libro_gen_rep.save(lg);
                 });
 
