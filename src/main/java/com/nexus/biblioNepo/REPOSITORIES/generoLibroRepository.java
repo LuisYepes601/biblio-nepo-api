@@ -5,6 +5,7 @@
 package com.nexus.biblioNepo.REPOSITORIES;
 
 import com.nexus.biblioNepo.DTOS.response.GenerLibro.GeneroLibroAdminDtoResp;
+import com.nexus.biblioNepo.DTOS.response.GenerLibro.GeneroLibroDetailsAdminDtoResp;
 import com.nexus.biblioNepo.DTOS.response.GenerLibro.GeneroLibroDtoResp;
 import com.nexus.biblioNepo.ENTYTIES.generoLibro;
 import io.lettuce.core.dynamic.annotation.Param;
@@ -80,4 +81,24 @@ public interface generoLibroRepository extends JpaRepository<generoLibro, Intege
             @Param(value = "nombre") String nombre,
             @Param(value = "isDelete") Boolean isDelete,
             Pageable pageable);
+
+    @Query("""
+           SELECT NEW com.nexus.biblioNepo.DTOS.response.GenerLibro.GeneroLibroDetailsAdminDtoResp(
+           
+           gl.deleteAt,
+           gl.isDelete,
+           gl.createBy,
+           gl.creatorName,
+           gl.updateBy,
+           gl.updateName,
+           gl.deleteBy,
+           gl.deleteName
+           )
+           
+           FROM generoLibro gl
+           
+           WHERE (gl.id = :id)
+           
+           """)
+    public Optional<GeneroLibroDetailsAdminDtoResp> getDetailsByID(@Param(value = "id") Integer id);
 }
