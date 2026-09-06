@@ -9,7 +9,6 @@ import com.nexus.biblioNepo.DTOS.request.EmailDinamico.BrevoSenderDto;
 import com.nexus.biblioNepo.DTOS.request.EmailDinamico.EmailDinamicoDto;
 import com.nexus.biblioNepo.ENTYTIES.Boock;
 import com.nexus.biblioNepo.ENTYTIES.usuario;
-import com.nexus.biblioNepo.GLOBALEXCEPTIONHANDLER.exceptions.DatoNoExistenteEcxeption;
 import com.nexus.biblioNepo.REPOSITORIES.usuarioRepository;
 import com.nexus.biblioNepo.SERVICES.RestClients.BrevRestClient;
 import com.nexus.biblioNepo.SERVICES.Templates.TemplateBuilder;
@@ -112,8 +111,6 @@ public class EmailService {
 
     public void CrearLibro(Boock boock) {
 
-      
-
         Map<String, Object> variables = new HashMap<>();
 
         variables.put("nombreUsuario", "LUS YEPES");
@@ -154,7 +151,7 @@ public class EmailService {
         brevoRecipientDtos.add(brevoRecipientDto);
 
         emailDinamicoDto.setTo(brevoRecipientDtos);
-        
+
         brevRestClient.enviarDinamico(emailDinamicoDto);
     }
 }
