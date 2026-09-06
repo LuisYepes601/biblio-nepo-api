@@ -48,6 +48,8 @@ public interface libro_categoria_repository extends JpaRepository<libro_categori
            LEFT JOIN lcti.categoryBoock cb
            
            WHERE lcti.isDelete = false
+           AND (lb.id = :id_libro)
+           
            """)
     public Page<CategoriaDtoresp> getByIdLibro(@Param(value = "id_libro") Long id_libro, Pageable pageable);
 }
