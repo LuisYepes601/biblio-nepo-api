@@ -6,6 +6,7 @@ package com.nexus.biblioNepo.SERVICES.GeneroLibre;
 
 import com.nexus.biblioNepo.DTOS.request.GeneroLibro.GenerolibroDtoReq;
 import com.nexus.biblioNepo.DTOS.response.GenerLibro.GeneroLibroAdminDtoResp;
+import com.nexus.biblioNepo.DTOS.response.GenerLibro.GeneroLibroDetailsAdminDtoResp;
 import com.nexus.biblioNepo.DTOS.response.PageResponse;
 import com.nexus.biblioNepo.ENTYTIES.Boock;
 import com.nexus.biblioNepo.ENTYTIES.generoLibro;
@@ -130,6 +131,16 @@ public class GeneroLibroServiceAdmin implements IGeneroLibroServiceAdmin {
         }
 
         return PageResponseUtils.CreatePageReponse(page);
+
+    }
+
+    @Cacheable(value = "genero-libro-detail", key = "#id")
+    @Transactional(readOnly = true)
+    @Override
+    public GeneroLibroDetailsAdminDtoResp getDetailsById(Integer id) {
+
+        return genLibroRepository.getDetailsByID(id)
+                .orElseThrow(() -> new DatoNoExistenteEcxeption("El genero no tiene detalles"));
 
     }
 
