@@ -6,6 +6,7 @@ package com.nexus.biblioNepo.CONTROLLERS.GeneroLibro;
 
 import com.nexus.biblioNepo.DTOS.request.GeneroLibro.GenerolibroDtoReq;
 import com.nexus.biblioNepo.DTOS.response.GenerLibro.GeneroLibroAdminDtoResp;
+import com.nexus.biblioNepo.DTOS.response.GenerLibro.GeneroLibroDetailsAdminDtoResp;
 import com.nexus.biblioNepo.DTOS.response.PageResponse;
 import com.nexus.biblioNepo.SERVICES.GeneroLibre.IGeneroLibroServiceAdmin;
 import io.swagger.v3.oas.annotations.Operation;
@@ -102,4 +103,16 @@ public class GeneroLibroAdminController {
                 .body(generoLibroServiceAdmin.getAll(nombre, isDelete, pageable));
 
     }
+
+    @Operation(description = "Operación encargada de mostrar los detallles de un genero del sistema",
+            method = "GET")
+    @GetMapping(value = "/{id}/details")
+    public ResponseEntity<GeneroLibroDetailsAdminDtoResp> getDetailsByID(
+            @PathVariable(name = "id", required = true) Integer id) {
+
+        return ResponseEntity
+                .ok()
+                .body(generoLibroServiceAdmin.getDetailsById(id));
+    }
+
 }
