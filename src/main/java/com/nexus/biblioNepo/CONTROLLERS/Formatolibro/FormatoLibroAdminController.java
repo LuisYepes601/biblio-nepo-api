@@ -5,18 +5,23 @@
 package com.nexus.biblioNepo.CONTROLLERS.Formatolibro;
 
 import com.nexus.biblioNepo.DTOS.request.Formatolibro.FormatolibroDtoReq;
+import com.nexus.biblioNepo.DTOS.response.FormatoLibro.FormatoLibroAdminDtoResp;
+import com.nexus.biblioNepo.DTOS.response.PageResponse;
 import com.nexus.biblioNepo.SERVICES.Formatolibro.IFormatoLibroAdminService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import restaurante_gratitude.demp.DTOS.Global.BasicResponseDto;
 
@@ -80,5 +85,24 @@ public class FormatoLibroAdminController {
         return ResponseEntity
                 .ok()
                 .body(new BasicResponseDto("El formtao de libro ha sido eliminado con éxito del sistema"));
+    }
+
+    @Operation(description = "Operación encaragda de mostrar los formatos de libro que existen en el sistema",
+            method = "GET")
+    @GetMapping()
+    public ResponseEntity<PageResponse<FormatoLibroAdminDtoResp>>
+         getAll(
+            @RequestParam(
+                    name = "nombre",
+                    required = false) String nombre,
+            @RequestParam(
+                    name = "isDelete",
+                    required = false) Boolean isDelete,
+            Pageable pageable) {
+
+        return ResponseEntity
+                .ok()
+                .body(formatoLibroAdminService.getAll(nombre, isDelete, pageable));
+
     }
 }

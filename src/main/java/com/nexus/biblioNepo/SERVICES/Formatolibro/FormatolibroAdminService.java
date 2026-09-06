@@ -5,15 +5,22 @@
 package com.nexus.biblioNepo.SERVICES.Formatolibro;
 
 import com.nexus.biblioNepo.DTOS.request.Formatolibro.FormatolibroDtoReq;
+import com.nexus.biblioNepo.DTOS.response.FormatoLibro.FormatoLibroAdminDtoResp;
+import com.nexus.biblioNepo.DTOS.response.PageResponse;
 import com.nexus.biblioNepo.ENTYTIES.formatoLibro;
 import com.nexus.biblioNepo.GLOBALEXCEPTIONHANDLER.exceptions.DatoNoExistenteEcxeption;
 import com.nexus.biblioNepo.GLOBALEXCEPTIONHANDLER.exceptions.DatoYaExistenteException;
+import com.nexus.biblioNepo.GLOBALEXCEPTIONHANDLER.exceptions.NoDatosQueMostrarExecption;
 import com.nexus.biblioNepo.REPOSITORIES.formatoLibroRepository;
 import com.nexus.biblioNepo.UTILS.AuditableUtils;
+import com.nexus.biblioNepo.UTILS.PageResponseUtils;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -115,6 +122,21 @@ public class FormatolibroAdminService implements IFormatoLibroAdminService {
         AuditableUtils.delete(formLibro, "prueba", "prueba");
 
         return formatoLibroRepo.save(formLibro);
+
+    }
+
+    @Cacheable(value = "formato-libros")
+    @Transactional(readOnly = true)
+    @Override
+    public PageResponse<FormatoLibroAdminDtoResp> getAll(String nombre, Boolean is_delete, Pageable pageable) {
+
+        Page<FormatoLibroAdminDtoResp> page = formatoLibroRepo.getAllAdmin(nombre, is_delete, pageable);
+
+        if (page.isEmpty()) {
+            throw new NoDatosQueMostrarExecption("No hay formatos que mostrar");
+        }
+
+        return PageResponseUtils.CreatePageReponse(page);
 
     }
 

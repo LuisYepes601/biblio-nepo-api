@@ -5,7 +5,10 @@
 package com.nexus.biblioNepo.SERVICES.Formatolibro;
 
 import com.nexus.biblioNepo.DTOS.request.Formatolibro.FormatolibroDtoReq;
+import com.nexus.biblioNepo.DTOS.response.FormatoLibro.FormatoLibroAdminDtoResp;
+import com.nexus.biblioNepo.DTOS.response.PageResponse;
 import com.nexus.biblioNepo.ENTYTIES.formatoLibro;
+import org.springframework.data.domain.Pageable;
 
 /**
  *
@@ -19,5 +22,6 @@ public interface IFormatoLibroAdminService {
     
     public formatoLibro deleteById(Integer id);
     
+    public PageResponse<FormatoLibroAdminDtoResp>getAll(String nombre, Boolean is_delete, Pageable pageable);
     
 }
