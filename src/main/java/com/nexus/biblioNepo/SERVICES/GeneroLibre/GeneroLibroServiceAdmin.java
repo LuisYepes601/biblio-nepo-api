@@ -5,18 +5,25 @@
 package com.nexus.biblioNepo.SERVICES.GeneroLibre;
 
 import com.nexus.biblioNepo.DTOS.request.GeneroLibro.GenerolibroDtoReq;
+import com.nexus.biblioNepo.DTOS.response.GenerLibro.GeneroLibroAdminDtoResp;
+import com.nexus.biblioNepo.DTOS.response.PageResponse;
 import com.nexus.biblioNepo.ENTYTIES.Boock;
 import com.nexus.biblioNepo.ENTYTIES.generoLibro;
 import com.nexus.biblioNepo.GLOBALEXCEPTIONHANDLER.exceptions.DatoNoExistenteEcxeption;
 import com.nexus.biblioNepo.GLOBALEXCEPTIONHANDLER.exceptions.DatoYaExistenteException;
+import com.nexus.biblioNepo.GLOBALEXCEPTIONHANDLER.exceptions.NoDatosQueMostrarExecption;
 import com.nexus.biblioNepo.REPOSITORIES.BoockRepository;
 import com.nexus.biblioNepo.REPOSITORIES.generoLibroRepository;
 import com.nexus.biblioNepo.REPOSITORIES.libro_genero_repository;
 import com.nexus.biblioNepo.UTILS.AuditableUtils;
+import com.nexus.biblioNepo.UTILS.PageResponseUtils;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -109,6 +116,21 @@ public class GeneroLibroServiceAdmin implements IGeneroLibroServiceAdmin {
         AuditableUtils.delete(gLibro, "prueb", "prueba");
 
         return genLibroRepository.save(gLibro);
+    }
+
+    @Cacheable(value = "genero-libros-admin")
+    @Transactional(readOnly = true)
+    @Override
+    public PageResponse<GeneroLibroAdminDtoResp> getAll(String nombre, Boolean isDelete, Pageable pageable) {
+
+        Page<GeneroLibroAdminDtoResp> page = genLibroRepository.getAllAdmin(nombre, isDelete, pageable);
+
+        if (page.isEmpty()) {
+            throw new NoDatosQueMostrarExecption("No hay geneos que mostrar");
+        }
+
+        return PageResponseUtils.CreatePageReponse(page);
+
     }
 
 }
