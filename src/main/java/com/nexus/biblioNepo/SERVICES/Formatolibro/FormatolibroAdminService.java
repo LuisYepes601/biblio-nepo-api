@@ -6,6 +6,7 @@ package com.nexus.biblioNepo.SERVICES.Formatolibro;
 
 import com.nexus.biblioNepo.DTOS.request.Formatolibro.FormatolibroDtoReq;
 import com.nexus.biblioNepo.DTOS.response.FormatoLibro.FormatoLibroAdminDtoResp;
+import com.nexus.biblioNepo.DTOS.response.FormatoLibro.FormatoLibroDetailsAdminDtoResp;
 import com.nexus.biblioNepo.DTOS.response.PageResponse;
 import com.nexus.biblioNepo.ENTYTIES.formatoLibro;
 import com.nexus.biblioNepo.GLOBALEXCEPTIONHANDLER.exceptions.DatoNoExistenteEcxeption;
@@ -138,6 +139,15 @@ public class FormatolibroAdminService implements IFormatoLibroAdminService {
 
         return PageResponseUtils.CreatePageReponse(page);
 
+    }
+
+    @Cacheable(value = "formato-libro-detail", key = "#id")
+    @Transactional(readOnly = true)
+    @Override
+    public FormatoLibroDetailsAdminDtoResp getDetailsByID(Long id) {
+
+        return formatoLibroRepo.getDetailsbyId(id)
+                .orElseThrow(() -> new NoDatosQueMostrarExecption("No hay detalles que mostrar"));
     }
 
 }

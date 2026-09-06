@@ -6,6 +6,7 @@ package com.nexus.biblioNepo.CONTROLLERS.Formatolibro;
 
 import com.nexus.biblioNepo.DTOS.request.Formatolibro.FormatolibroDtoReq;
 import com.nexus.biblioNepo.DTOS.response.FormatoLibro.FormatoLibroAdminDtoResp;
+import com.nexus.biblioNepo.DTOS.response.FormatoLibro.FormatoLibroDetailsAdminDtoResp;
 import com.nexus.biblioNepo.DTOS.response.PageResponse;
 import com.nexus.biblioNepo.SERVICES.Formatolibro.IFormatoLibroAdminService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -91,18 +92,29 @@ public class FormatoLibroAdminController {
             method = "GET")
     @GetMapping()
     public ResponseEntity<PageResponse<FormatoLibroAdminDtoResp>>
-         getAll(
-            @RequestParam(
-                    name = "nombre",
-                    required = false) String nombre,
-            @RequestParam(
-                    name = "isDelete",
-                    required = false) Boolean isDelete,
-            Pageable pageable) {
+            getAll(
+                    @RequestParam(
+                            name = "nombre",
+                            required = false) String nombre,
+                    @RequestParam(
+                            name = "isDelete",
+                            required = false) Boolean isDelete,
+                    Pageable pageable) {
 
         return ResponseEntity
                 .ok()
                 .body(formatoLibroAdminService.getAll(nombre, isDelete, pageable));
 
     }
+
+    @Operation(description = "Operación encargada de mostrar los detalles de un formato de libro en el sistema",
+            method = "GET")
+    @GetMapping(value = "/{id}/details")
+    public ResponseEntity<FormatoLibroDetailsAdminDtoResp> getDetailById(@PathVariable(name = "id", required = true) Long id) {
+
+        return ResponseEntity
+                .ok()
+                .body(formatoLibroAdminService.getDetailsByID(id));
+    }
+
 }

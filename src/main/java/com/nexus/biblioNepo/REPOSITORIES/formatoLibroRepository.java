@@ -6,6 +6,7 @@ package com.nexus.biblioNepo.REPOSITORIES;
 
 import com.nexus.biblioNepo.DTOS.response.FormatoLibro.FormatoLibrODtoResp;
 import com.nexus.biblioNepo.DTOS.response.FormatoLibro.FormatoLibroAdminDtoResp;
+import com.nexus.biblioNepo.DTOS.response.FormatoLibro.FormatoLibroDetailsAdminDtoResp;
 import com.nexus.biblioNepo.ENTYTIES.formatoLibro;
 import io.lettuce.core.dynamic.annotation.Param;
 import java.util.Optional;
@@ -65,4 +66,24 @@ public interface formatoLibroRepository extends JpaRepository<formatoLibro, Inte
             @Param(value = "nombre") String nombre,
             @Param(value = "is_delete") Boolean is_delete,
             Pageable pageable);
+
+    @Query("""
+           SELECT NEW com.nexus.biblioNepo.DTOS.response.FormatoLibro.FormatoLibroDetailsAdminDtoResp(
+           
+                      fl.deleteAt,
+                      fl.isDelete,
+                      fl.createBy,
+                      fl.creatorName,
+                      fl.updateBy,
+                      fl.updateName,
+                      fl.deleteBy,
+                      fl.deleteName
+           )
+           
+           FROM formatoLibro fl
+           
+           WHERE (fl.id = :id)
+           
+           """)
+    public Optional<FormatoLibroDetailsAdminDtoResp> getDetailsbyId(@Param(value = "id") Long id);
 }
