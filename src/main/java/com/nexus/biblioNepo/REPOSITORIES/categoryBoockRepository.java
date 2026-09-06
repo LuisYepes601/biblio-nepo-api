@@ -40,9 +40,12 @@ public interface categoryBoockRepository extends JpaRepository<categoryBoock, In
            )
            FROM categoryBoock cb
            
+           
            WHERE(:nombre IS NULL OR LOWER(cb.nombre) LIKE CONCAT(LOWER(CAST(:nombre AS string)), '%'))
            AND (cb.isDelete = false)
            
            """)
     public Page<CategoriaDtoresp> getAll(@Param(value = "nombre") String nombre, Pageable pageable);
+
+    
 }

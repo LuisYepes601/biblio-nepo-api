@@ -95,4 +95,18 @@ public class CategoriaController {
                 .body(new BasicResponseDto("Se ha eliminado con éxito la categoria del libro"));
     }
 
+    @Operation(description = "Operación encaragda de mostrar las categorias de un libro",
+            method = "GET")
+    @GetMapping(value = "/{id_libro}")
+    public ResponseEntity<PageResponse<CategoriaDtoresp>> getCategoriasByIdLibro(
+            @PathVariable(
+                    name = "id_libro",
+                    required = true) Long id_libro,
+            Pageable pageable) {
+
+        return ResponseEntity
+                .ok()
+                .body(categoriaService.getCategoriasByIdLibro(id_libro, pageable));
+    }
+
 }

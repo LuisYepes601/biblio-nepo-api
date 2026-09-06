@@ -131,4 +131,19 @@ public class CategoriaService implements ICategoriaService {
         libro_cat_repo.save(lc);
     }
 
+    @Cacheable(value = "cat-libros-by-id_libro")
+    @Transactional(readOnly = true)
+    @Override
+    public PageResponse<CategoriaDtoresp> getCategoriasByIdLibro(Long id_libro, Pageable pageable) {
+
+        Page<CategoriaDtoresp> page = libro_cat_repo.getByIdLibro(id_libro, pageable);
+
+        if (page.isEmpty()) {
+            throw new NoDatosQueMostrarExecption("el libro no tiene categorias");
+        }
+
+        return PageResponseUtils.CreatePageReponse(page);
+
+    }
+
 }
