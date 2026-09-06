@@ -83,7 +83,7 @@ public class EmailService {
         variables.put("usuario", usuario);
         variables.put("passwordTemporal", newPassword);
 
-        String html = templateBuilder.createTemplateHtml("recuperarPassword", variables);
+        String html = templateBuilder.createTemplateHtml("RecuperarPassword", variables);
 
         EmailDinamicoDto emailDinamicoDto = new EmailDinamicoDto();
 
