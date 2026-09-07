@@ -4,9 +4,11 @@
  */
 package com.nexus.biblioNepo.SERVICES.User;
 
+import com.nexus.biblioNepo.DTOS.request.Usuarios.UsuarioBasicoDtoReq;
 import com.nexus.biblioNepo.DTOS.response.PageResponse;
 import com.nexus.biblioNepo.DTOS.response.Users.UserDetailsAdminDtoResp;
 import com.nexus.biblioNepo.DTOS.response.Users.UserDtoAdminResponse;
+import com.nexus.biblioNepo.ENTYTIES.usuario;
 import org.springframework.data.domain.Pageable;
 
 /**
@@ -19,8 +21,10 @@ public interface IUserAdminService {
             String email,
             Integer id_rol,
             String nombre,
-            String primer_apellido, 
+            String primer_apellido,
             Pageable pageable);
-    
+
     public UserDetailsAdminDtoResp getDetailsById(Long id);
+
+  
 }

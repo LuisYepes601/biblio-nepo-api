@@ -46,7 +46,7 @@ public class DireccionService implements IDireccionService {
     @CacheEvict(value = "direcciones", allEntries = true)
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public direccion create(Integer id_user, DireccionDtoReq direccionDtoReq) {
+    public direccion create(Long id_user, DireccionDtoReq direccionDtoReq) {
 
         direccion dir = new direccion();
 

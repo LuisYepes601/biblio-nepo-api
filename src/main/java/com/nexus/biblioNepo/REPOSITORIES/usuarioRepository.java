@@ -22,7 +22,7 @@ import org.springframework.stereotype.Repository;
  * @author luis
  */
 @Repository
-public interface usuarioRepository extends JpaRepository<usuario, Integer> {
+public interface usuarioRepository extends JpaRepository<usuario, Long> {
 
     @Query("""
            SELECT u

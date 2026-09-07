@@ -46,7 +46,7 @@ public class DireccionController {
             @Valid
             @RequestBody DireccionDtoReq direccionDtoReq,
             @PathVariable(name = "id_user",
-                    required = true) Integer id_user) {
+                    required = true) Long id_user) {
 
         direccionService.create(id_user, direccionDtoReq);
 

@@ -17,5 +17,5 @@ public interface IRegistroService {
 
     public usuario register(UsuarioBasicoDtoReq usuarioBasicoDtoReq, MultipartFile fotoPerfil);
 
-    public usuario registerDireccion(Integer id_user, DireccionDtoReq direccionDtoReq);
+    public usuario registerDireccion(Long id_user, DireccionDtoReq direccionDtoReq);
 }

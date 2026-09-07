@@ -111,7 +111,7 @@ public class RegisroService implements IRegistroService {
     @CacheEvict(value = "direcciones")
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public usuario registerDireccion(Integer id_user, DireccionDtoReq direccionDtoReq) {
+    public usuario registerDireccion(Long id_user, DireccionDtoReq direccionDtoReq) {
 
         usuario user = usuarioRepo.findById(id_user)
                 .orElseThrow(() -> new DatoNoExistenteEcxeption("El usuario no existe en el sistema"));
