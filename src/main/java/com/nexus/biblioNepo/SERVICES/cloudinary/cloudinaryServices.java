@@ -81,7 +81,7 @@ public class cloudinaryServices implements ICloudinaryService {
         Map<String, Object> response;
         try {
             response = cloudinary.uploader()
-                    .upload(file.getInputStream(), CloudinaryFileUtils.ProfilePhtotoUser(nameUser, nameFile));
+                    .upload(file.getBytes(), CloudinaryFileUtils.ProfilePhtotoUser(nameUser, nameFile));
         } catch (IOException e) {
             throw new RuntimeException("Error subiendo la foto de perfil a Cloudinary", e);
             // o mejor: tu propia excepción custom + @RestControllerAdvice, como ya haces en Gratitude
