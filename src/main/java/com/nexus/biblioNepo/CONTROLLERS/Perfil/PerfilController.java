@@ -57,7 +57,7 @@ public class PerfilController {
 
     @Operation(description = "Operación encargada de mostrar los datos basicos de un perfil de usuario",
             method = "GET")
-    @GetMapping(value = "/{id}/datos-basicos")
+    @GetMapping(value = "/{id_user}/datos-basicos")
     public ResponseEntity<UsuarioPerfilDtoResp> getDatosBasicosPerfil(
             @PathVariable(
                     name = "id_user",
