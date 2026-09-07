@@ -78,22 +78,18 @@ public class cloudinaryServices implements ICloudinaryService {
 
     @Override
     public CloudinaryUploadResponse uploadFotoPerfil(MultipartFile file, String nameUser, String nameFile) {
-
-        Map<String, Object> response = new HashMap<>();
-
+        Map<String, Object> response;
         try {
-
             response = cloudinary.uploader()
                     .upload(file.getInputStream(), CloudinaryFileUtils.ProfilePhtotoUser(nameUser, nameFile));
-
         } catch (IOException e) {
+            throw new RuntimeException("Error subiendo la foto de perfil a Cloudinary", e);
+            // o mejor: tu propia excepción custom + @RestControllerAdvice, como ya haces en Gratitude
         }
 
         CloudinaryUploadResponse cloudinaryUploadResponse = new CloudinaryUploadResponse();
-
-        cloudinaryUploadResponse.setPublicId(response.get("public_id").toString());
-        cloudinaryUploadResponse.setSecureUrl(response.get("secure_url").toString());
-
+        cloudinaryUploadResponse.setPublicId((String) response.get("public_id"));
+        cloudinaryUploadResponse.setSecureUrl((String) response.get("secure_url"));
         return cloudinaryUploadResponse;
     }
 
