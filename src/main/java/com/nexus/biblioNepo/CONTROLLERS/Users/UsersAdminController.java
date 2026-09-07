@@ -5,6 +5,7 @@
 package com.nexus.biblioNepo.CONTROLLERS.Users;
 
 import com.nexus.biblioNepo.DTOS.response.PageResponse;
+import com.nexus.biblioNepo.DTOS.response.Users.UserDetailsAdminDtoResp;
 import com.nexus.biblioNepo.DTOS.response.Users.UserDtoAdminResponse;
 import com.nexus.biblioNepo.SERVICES.User.IUserAdminService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -51,6 +53,19 @@ public class UsersAdminController {
         return ResponseEntity
                 .ok()
                 .body(userAdminService.getAll(num_identificacion, email, id_rol, nombre, primer_apellido, pageable));
+    }
+
+    @Operation(description = "Operación encargada de mostrar los detalles del usuario en el sistema",
+            method = "GET")
+    @GetMapping(value = "/{id}/details")
+    public ResponseEntity<UserDetailsAdminDtoResp> getDetailsById(@PathVariable(
+            name = "id",
+            required = true) Long id) {
+
+        return ResponseEntity
+                .ok()
+                .body(userAdminService.getDetailsById(id));
+
     }
 
 }

@@ -5,7 +5,9 @@
 package com.nexus.biblioNepo.SERVICES.User;
 
 import com.nexus.biblioNepo.DTOS.response.PageResponse;
+import com.nexus.biblioNepo.DTOS.response.Users.UserDetailsAdminDtoResp;
 import com.nexus.biblioNepo.DTOS.response.Users.UserDtoAdminResponse;
+import com.nexus.biblioNepo.GLOBALEXCEPTIONHANDLER.exceptions.DatoNoExistenteEcxeption;
 import com.nexus.biblioNepo.GLOBALEXCEPTIONHANDLER.exceptions.NoDatosQueMostrarExecption;
 import com.nexus.biblioNepo.REPOSITORIES.usuarioRepository;
 import com.nexus.biblioNepo.UTILS.PageResponseUtils;
@@ -45,6 +47,16 @@ public class UserAdminService implements IUserAdminService{
         return PageResponseUtils.CreatePageReponse(page);
 
     }
+
+    @Cacheable(value = "usuari-detail",key = "#id")
+    @Transactional(readOnly = true)
+    @Override
+    public UserDetailsAdminDtoResp getDetailsById(Long id) {
+
+        return usuRepository.getDetailsById(id)
+                .orElseThrow(() -> new DatoNoExistenteEcxeption("El usuario no existe en el sistema"));
+    }
+    
     
     
     

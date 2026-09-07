@@ -5,6 +5,7 @@
 package com.nexus.biblioNepo.SERVICES.User;
 
 import com.nexus.biblioNepo.DTOS.response.PageResponse;
+import com.nexus.biblioNepo.DTOS.response.Users.UserDetailsAdminDtoResp;
 import com.nexus.biblioNepo.DTOS.response.Users.UserDtoAdminResponse;
 import org.springframework.data.domain.Pageable;
 
@@ -20,4 +21,6 @@ public interface IUserAdminService {
             String nombre,
             String primer_apellido, 
             Pageable pageable);
+    
+    public UserDetailsAdminDtoResp getDetailsById(Long id);
 }
