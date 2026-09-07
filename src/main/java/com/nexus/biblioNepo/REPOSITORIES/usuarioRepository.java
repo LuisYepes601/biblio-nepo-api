@@ -4,6 +4,7 @@
  */
 package com.nexus.biblioNepo.REPOSITORIES;
 
+import com.nexus.biblioNepo.DTOS.response.Perfil.UsuarioPerfilDtoResp;
 import com.nexus.biblioNepo.DTOS.response.Users.UserDetailsAdminDtoResp;
 import com.nexus.biblioNepo.DTOS.response.Users.UserDtoAdminResponse;
 import com.nexus.biblioNepo.ENTYTIES.departamento;
@@ -95,4 +96,41 @@ public interface usuarioRepository extends JpaRepository<usuario, Long> {
            
            """)
     public Optional<UserDetailsAdminDtoResp> getDetailsById(@Param(value = "id") Long id);
+
+    @Query("""
+           SELECT DISTINCT NEW com.nexus.biblioNepo.DTOS.response.Perfil.UsuarioPerfilDtoResp(
+            ti.nombre,
+              rol.nombre,
+                      dir.barrio,
+                      dir.complemento,
+                      dir.masDetalles,
+                      pais.nombre,
+                      dep.nombre,
+                      ciu.nombre,
+           us.id,
+           us.nombre,
+           us.segundoNombre,
+           us.primerApellido,
+           us.segundoApellido,
+           us.fechaNacimiento,
+           us.urlFotoPerfil,
+           us.publicIdUrlFotoPerfil,
+           us.email,
+           us.numeroIdentificacion
+         
+           
+           )
+           
+           FROM usuario us
+           LEFT JOIN us.tipoIdentificacion ti
+           LEFT JOIN us.rol rol
+           LEFT JOIN us.direccion dir
+           LEFT JOIN dir.pais pais
+           LEFT JOIN dir.departamento dep
+           LEFT JOIN dir.ciudad ciu
+           
+           WHERE (us.id = :id)
+           
+           """)
+    public Optional<UsuarioPerfilDtoResp> getDatosBaicosPerfil(@Param(value = "id") Long id);
 }

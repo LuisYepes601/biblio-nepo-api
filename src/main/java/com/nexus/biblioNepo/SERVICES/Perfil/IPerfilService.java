@@ -4,6 +4,8 @@
  */
 package com.nexus.biblioNepo.SERVICES.Perfil;
 
+import com.nexus.biblioNepo.DTOS.response.Perfil.UsuarioPerfilDtoResp;
+import com.nexus.biblioNepo.DTOS.response.Users.UserDtoAdminResponse;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -13,4 +15,6 @@ import org.springframework.web.multipart.MultipartFile;
 public interface IPerfilService {
     
     public void updateFotoPerfil(Long id_user, MultipartFile file);
+    
+    public UsuarioPerfilDtoResp getDatosBasicos(Long id_user);
 }

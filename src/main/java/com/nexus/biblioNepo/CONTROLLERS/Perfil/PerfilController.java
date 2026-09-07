@@ -4,11 +4,13 @@
  */
 package com.nexus.biblioNepo.CONTROLLERS.Perfil;
 
+import com.nexus.biblioNepo.DTOS.response.Perfil.UsuarioPerfilDtoResp;
 import com.nexus.biblioNepo.SERVICES.Perfil.IPerfilService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,10 +49,22 @@ public class PerfilController {
                     required = true) MultipartFile file) {
 
         perfilService.updateFotoPerfil(id_user, file);
-        
+
         return ResponseEntity
                 .ok()
                 .body(new BasicResponseDto("Se ha a ctulizado la foto con exito"));
     }
 
+    @Operation(description = "Operación encargada de mostrar los datos basicos de un perfil de usuario",
+            method = "GET")
+    @GetMapping(value = "/{id}/datos-basicos")
+    public ResponseEntity<UsuarioPerfilDtoResp> getDatosBasicosPerfil(
+            @PathVariable(
+                    name = "id_user",
+                    required = true) Long id_user) {
+
+        return ResponseEntity
+                .ok()
+                .body(perfilService.getDatosBasicos(id_user));
+    }
 }
