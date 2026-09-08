@@ -8,6 +8,7 @@ import com.nexus.biblioNepo.SERVICES.JwtService.JwtAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -47,7 +48,7 @@ public class SecurityConfig {
                 // Configuración de endpoints
                 .authorizeHttpRequests(auth -> auth
                 // Login público
-                .requestMatchers("/api/v1/auth", "/api/v1/auth/**")
+                .requestMatchers(HttpMethod.OPTIONS, "/api/v1/auth", "/api/v1/auth/**")
                 .permitAll()
                 //register 
                 .requestMatchers("/api/v1/register")
@@ -83,7 +84,7 @@ public class SecurityConfig {
                 .permitAll()
                 //roles
                 .requestMatchers("/api/v1/roles")
-                        .permitAll()
+                .permitAll()
                 // Todo lo demás necesita autenticación
                 .anyRequest().authenticated()
                 )
