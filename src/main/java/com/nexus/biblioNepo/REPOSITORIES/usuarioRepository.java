@@ -133,4 +133,12 @@ public interface usuarioRepository extends JpaRepository<usuario, Long> {
            
            """)
     public Optional<UsuarioPerfilDtoResp> getDatosBaicosPerfil(@Param(value = "id") Long id);
+
+    @Query("""
+    SELECT u
+    FROM usuario u
+    JOIN FETCH u.rol
+    WHERE u.email = :email
+""")
+    Optional<usuario> findByEmailWithRol(@Param("email") String email);
 }
