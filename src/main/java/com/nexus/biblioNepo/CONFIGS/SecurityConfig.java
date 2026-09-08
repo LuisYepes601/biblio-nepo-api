@@ -28,8 +28,6 @@ public class SecurityConfig {
     public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter) {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
     }
-    
-    
 
     @Bean
     public SecurityFilterChain securityFilterChain(
@@ -38,29 +36,33 @@ public class SecurityConfig {
         httpSecurity
                 // Desactivamos CSRF porque nuestra API utilizará JWT
                 .csrf(csrf -> csrf.disable())
-
                 // No utilizaremos sesiones
-                .sessionManagement(session ->
-                        session.sessionCreationPolicy(
-                                SessionCreationPolicy.STATELESS
-                        )
+                .sessionManagement(session
+                        -> session.sessionCreationPolicy(
+                        SessionCreationPolicy.STATELESS
                 )
-
+                )
                 // Configuración de endpoints
                 .authorizeHttpRequests(auth -> auth
-
-                        // Login público
-                     .requestMatchers("/api/v1/auth", "/api/v1/auth/**").permitAll()
-                        // Swagger público
-                        .requestMatchers(
-                                "/swagger-ui/**",
-                                "/v3/api-docs/**"
-                        ).permitAll()
-
-                        // Todo lo demás necesita autenticación
-                        .anyRequest().authenticated()
+                // Login público
+                .requestMatchers("/api/v1/auth", "/api/v1/auth/**").permitAll()
+                        
+                 //register 
+                 .requestMatchers("/api/v1/register")
+                        .permitAll()
+                        
+                  //rcueperacion de credenciales
+                  .requestMatchers("/api/v1/recuperar-credenciales")
+                        .permitAll()
+                        
+                // Swagger público
+                .requestMatchers(
+                        "/swagger-ui/**",
+                        "/v3/api-docs/**"
+                ).permitAll()
+                // Todo lo demás necesita autenticación
+                .anyRequest().authenticated()
                 )
-
                 // Nuestro filtro JWT se ejecuta antes del filtro
                 // de autenticación de usuario y contraseña
                 .addFilterBefore(
