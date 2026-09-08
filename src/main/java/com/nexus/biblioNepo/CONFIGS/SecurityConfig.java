@@ -76,6 +76,12 @@ public class SecurityConfig {
                 //genero libro
                 .requestMatchers("/api/v1/genero-libros")
                 .permitAll()
+                //tipo identificaciones
+                .requestMatchers("/api/v1/admin/tipo-identificaciones")
+                .permitAll()
+                //roles
+                .requestMatchers("/api/v1/roles")
+                        .permitAll()
                 // Todo lo demás necesita autenticación
                 .anyRequest().authenticated()
                 )
