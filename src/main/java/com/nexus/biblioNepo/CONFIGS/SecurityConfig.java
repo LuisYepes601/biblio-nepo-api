@@ -45,21 +45,25 @@ public class SecurityConfig {
                 // Configuración de endpoints
                 .authorizeHttpRequests(auth -> auth
                 // Login público
-                .requestMatchers("/api/v1/auth", "/api/v1/auth/**").permitAll()
-                        
-                 //register 
-                 .requestMatchers("/api/v1/register")
-                        .permitAll()
-                        
-                  //rcueperacion de credenciales
-                  .requestMatchers("/api/v1/recuperar-credenciales")
-                        .permitAll()
-                        
+                .requestMatchers("/api/v1/auth", "/api/v1/auth/**")
+                .permitAll()
+                //register 
+                .requestMatchers("/api/v1/register")
+                .permitAll()
+                //rcueperacion de credenciales
+                .requestMatchers("/api/v1/recuperar-credenciales")
+                .permitAll()
+                //categorias de libro
+                .requestMatchers("/api/v1/categoria-libros")
+                .permitAll()
                 // Swagger público
                 .requestMatchers(
                         "/swagger-ui/**",
                         "/v3/api-docs/**"
                 ).permitAll()
+                //libros
+                .requestMatchers("/api/v1/libros/admin")
+                .permitAll()
                 // Todo lo demás necesita autenticación
                 .anyRequest().authenticated()
                 )
