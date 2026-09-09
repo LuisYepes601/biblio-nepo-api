@@ -47,10 +47,10 @@ public class SecurityConfig {
                 )
                 // Configuración de endpoints
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.OPTIONS,"/**")
-                        .permitAll()
+                .requestMatchers(HttpMethod.OPTIONS, "/**")
+                .permitAll()
                 // Login público
-                .requestMatchers( "/api/v1/auth", "/api/v1/auth/**")
+                .requestMatchers("/api/v1/auth", "/api/v1/auth/**")
                 .permitAll()
                 //register 
                 .requestMatchers("/api/v1/register")
