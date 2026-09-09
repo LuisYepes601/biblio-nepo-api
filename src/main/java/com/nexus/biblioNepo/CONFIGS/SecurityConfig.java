@@ -69,7 +69,7 @@ public class SecurityConfig {
                 //libros
                 .requestMatchers("/api/v1/libros/admin")
                 .permitAll()
-                .requestMatchers("api/v1/libros/{id_libro}/details")
+                .requestMatchers("/api/v1/libros/{id_libro}/details")
                 .permitAll()
                 //idomas
                 .requestMatchers("/api/v1/idiomas")
@@ -89,6 +89,9 @@ public class SecurityConfig {
                 //roles
                 .requestMatchers("/api/v1/roles")
                 .permitAll()
+                        //datos de perfil
+                        .requestMatchers("/api/v1/perfil/{id_user}/datos-basicos")
+                        .permitAll()
                 // Todo lo demás necesita autenticación
                 .anyRequest().authenticated()
                 )
