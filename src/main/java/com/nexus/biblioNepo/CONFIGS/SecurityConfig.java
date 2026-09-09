@@ -69,6 +69,8 @@ public class SecurityConfig {
                 //libros
                 .requestMatchers("/api/v1/libros/admin")
                 .permitAll()
+                .requestMatchers("api/v1/libros/{id_libro}/details")
+                .permitAll()
                 //idomas
                 .requestMatchers("/api/v1/idiomas")
                 .permitAll()
