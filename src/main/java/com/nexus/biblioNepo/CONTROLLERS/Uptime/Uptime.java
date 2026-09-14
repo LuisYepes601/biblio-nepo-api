@@ -26,4 +26,13 @@ public class Uptime {
                 .body(Map.of("message", "is live"));
     }
 
+    @GetMapping(value = "/")
+    public ResponseEntity<Map<String, String>> bienvenidad() {
+
+        return ResponseEntity
+                .ok()
+                .body(Map.of("message", "estoy vivo"));
+
+    }
+
 }
