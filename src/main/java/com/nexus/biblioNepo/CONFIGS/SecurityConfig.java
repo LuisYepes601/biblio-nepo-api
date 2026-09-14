@@ -49,6 +49,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                 .requestMatchers(HttpMethod.OPTIONS, "/**")
                 .permitAll()
+                .requestMatchers("/")
+                .permitAll()
                 // Login público
                 .requestMatchers("/api/v1/auth", "/api/v1/auth/**")
                 .permitAll()
@@ -89,9 +91,9 @@ public class SecurityConfig {
                 //roles
                 .requestMatchers("/api/v1/roles")
                 .permitAll()
-                        //datos de perfil
-                        .requestMatchers("/api/v1/perfil/{id_user}/datos-basicos")
-                        .permitAll()
+                //datos de perfil
+                .requestMatchers("/api/v1/perfil/{id_user}/datos-basicos")
+                .permitAll()
                 // Todo lo demás necesita autenticación
                 .anyRequest().authenticated()
                 )
