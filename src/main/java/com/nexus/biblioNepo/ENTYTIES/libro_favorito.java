@@ -34,4 +34,39 @@ public class libro_favorito extends Auditoria {
     @JoinColumn(name = "id_libro", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
     private Boock boock;
+
+    public libro_favorito(Integer id, usuario usuario, Boock boock) {
+        this.id = id;
+        this.usuario = usuario;
+        this.boock = boock;
+    }
+
+    public libro_favorito() {
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public Boock getBoock() {
+        return boock;
+    }
+
+    public void setBoock(Boock boock) {
+        this.boock = boock;
+    }
+    
+    
 }

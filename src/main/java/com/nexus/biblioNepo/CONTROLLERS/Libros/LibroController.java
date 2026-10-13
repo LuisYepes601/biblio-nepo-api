@@ -6,6 +6,7 @@ package com.nexus.biblioNepo.CONTROLLERS.Libros;
 
 import com.nexus.biblioNepo.DTOS.response.Libro.DetalleLibroBasicRespDto;
 import com.nexus.biblioNepo.DTOS.response.Libro.LibroBasicDtoResonse;
+import com.nexus.biblioNepo.DTOS.response.Libro.LibroFavoritoDtoResp;
 import com.nexus.biblioNepo.DTOS.response.PageResponse;
 import com.nexus.biblioNepo.SERVICES.Libros.ILibroService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -15,9 +16,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import restaurante_gratitude.demp.DTOS.Global.BasicResponseDto;
 
 /**
  *
@@ -68,4 +72,33 @@ public class LibroController {
                 .body(libroService.getDetailsByID(id));
     }
 
+    @Operation(description = "Operación encaragda de asignar un libro favorito a un usuario.",
+            method = "PUT")
+    @PutMapping(value = "/asignar-favorito")
+    public ResponseEntity<BasicResponseDto> asignarFavorito(
+            @RequestParam(value = "id_libro", required = true) Long id_libro,
+            @RequestParam(value = "id_usuario", required = true) Long id_usuario
+    ) {
+
+        libroService.agregarLibroFavorito(id_libro, id_usuario);
+
+        return ResponseEntity
+                .ok()
+                .body(new BasicResponseDto("Libro agregado a favoritos"));
+
+    }
+
+    @Operation(description = "Operación encargada de obtener lso libros favoritos de un usuario",
+            method = "GET")
+    @GetMapping(value = "/favoritos")
+    public ResponseEntity<PageResponse<LibroFavoritoDtoResp>> obtenerLibrosFavoritos(
+            @RequestParam(name = "id_user", required = true) Long id_user,
+            Pageable pageable
+    ) {
+
+        return ResponseEntity
+                .ok()
+                .body(libroService.ObtenerMisLibrosFavoritos(id_user, pageable));
+
+    }
 }
