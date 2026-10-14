@@ -64,6 +64,7 @@ public interface libro_favorito_repository extends JpaRepository<libro_favorito,
            LEFT JOIN lf.usuario us
            
            WHERE us.id = :id_user
+           AND lf.isDelete = false
            
            """)
     public Page<LibroFavoritoDtoResp> ObtenerMisLibrosFavoritos(
