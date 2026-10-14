@@ -119,4 +119,24 @@ public class LibroService implements ILibroService {
 
     }
 
+    @CacheEvict(value = "mis_libros_favoritos", allEntries = true)
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void eliminarFavorito(Long id_libro, Long id_user) {
+
+        Optional<libro_favorito> existe = lfRepo.existeAndEstaActivo(id_libro, id_user);
+
+        if (existe.isEmpty()) {
+
+            throw new DatoNoExistenteEcxeption("No tienes ese libro como favorito actualmente");
+        }
+
+        libro_favorito lf = existe.get();
+
+        AuditableUtils.delete(lf, "", "prueba");
+
+        lfRepo.save(lf);
+
+    }
+
 }

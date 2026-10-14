@@ -32,4 +32,6 @@ public interface ILibroService {
     public void agregarLibroFavorito(Long id_libro, Long id_user);
     
     public PageResponse<LibroFavoritoDtoResp>ObtenerMisLibrosFavoritos(Long id_user, Pageable pageable);
+    
+    public void eliminarFavorito(Long id_libro, Long id_user);
 }

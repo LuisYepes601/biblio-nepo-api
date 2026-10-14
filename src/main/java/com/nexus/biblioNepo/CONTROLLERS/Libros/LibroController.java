@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -101,4 +102,20 @@ public class LibroController {
                 .body(libroService.ObtenerMisLibrosFavoritos(id_user, pageable));
 
     }
+
+    @Operation(description = "Eliminar un libro de favoritos",
+            method = "DELETE")
+    @DeleteMapping(value = "/favorite")
+    public ResponseEntity<BasicResponseDto> eliminarFavorito(
+            @RequestParam(name = "id_libro", required = true) Long id_libro,
+            @RequestParam(name = "id_user", required = true) Long id_user
+    ) {
+
+        libroService.eliminarFavorito(id_libro, id_user);
+
+        return ResponseEntity
+                .ok()
+                .body(new BasicResponseDto("Se ha quitado de favoritos con exito"));
+    }
+
 }
