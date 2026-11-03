@@ -95,6 +95,8 @@ public class SecurityConfig {
                 //roles
                 .requestMatchers("/api/v1/roles")
                 .permitAll()
+                .requestMatchers("/api/v1/admin/roles")
+                .permitAll()
                 //datos de perfil
                 .requestMatchers("/api/v1/perfil/{id_user}/datos-basicos")
                 .permitAll()
