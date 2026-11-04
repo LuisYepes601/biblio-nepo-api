@@ -128,7 +128,7 @@ public class EmailService {
 
         }
 
-        String html = templateBuilder.createTemplateHtml("libroCreado", variables);
+        String html = templateBuilder.createTemplateHtml("LibroCreado", variables);
 
         EmailDinamicoDto emailDinamicoDto = new EmailDinamicoDto();
 
