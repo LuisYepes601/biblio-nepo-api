@@ -5,19 +5,26 @@
 package com.nexus.biblioNepo.SERVICES.Prestamos;
 
 import com.nexus.biblioNepo.DTOS.request.Prestamos.PrestamoDtoreq;
+import com.nexus.biblioNepo.DTOS.response.PageResponse;
+import com.nexus.biblioNepo.DTOS.response.Prestamos.PrestasmosDtoResp;
 import com.nexus.biblioNepo.ENTYTIES.Boock;
 import com.nexus.biblioNepo.ENTYTIES.prestamo;
 import com.nexus.biblioNepo.ENTYTIES.usuario;
 import com.nexus.biblioNepo.GLOBALEXCEPTIONHANDLER.exceptions.DatoNoExistenteEcxeption;
 import com.nexus.biblioNepo.GLOBALEXCEPTIONHANDLER.exceptions.DatoYaExistenteException;
+import com.nexus.biblioNepo.GLOBALEXCEPTIONHANDLER.exceptions.NoDatosQueMostrarExecption;
 import com.nexus.biblioNepo.REPOSITORIES.BoockRepository;
 import com.nexus.biblioNepo.REPOSITORIES.prestamo_repository;
 import com.nexus.biblioNepo.REPOSITORIES.usuarioRepository;
 import com.nexus.biblioNepo.UTILS.AuditableUtils;
+import com.nexus.biblioNepo.UTILS.PageResponseUtils;
 import java.time.LocalDate;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -84,9 +91,23 @@ public class PrestamosService implements IPrestamosService {
         pt.setUsuario(usu);
 
         AuditableUtils.create(pt, "prueba", "prueba");
-        
+
         prestRepo.save(pt);
 
+    }
+
+    @Cacheable(value = "prestamos")
+    @Transactional(readOnly = true)
+    @Override
+    public PageResponse<PrestasmosDtoResp> getMisPrestamos(Long id_user, Pageable pageable) {
+
+        Page<PrestasmosDtoResp> page = prestRepo.getPrestamosByIdUser(id_user, pageable);
+
+        if (page.isEmpty()) {
+            throw new NoDatosQueMostrarExecption("No tienes prestamos que mostrar");
+        }
+
+        return PageResponseUtils.CreatePageReponse(page);
     }
 
 }
