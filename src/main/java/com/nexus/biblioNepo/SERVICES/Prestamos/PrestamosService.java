@@ -84,6 +84,8 @@ public class PrestamosService implements IPrestamosService {
         pt.setUsuario(usu);
 
         AuditableUtils.create(pt, "prueba", "prueba");
+        
+        prestRepo.save(pt);
 
     }
 
