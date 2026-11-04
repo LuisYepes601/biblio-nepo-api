@@ -65,13 +65,13 @@ public class PrestamosController {
                 .body(prestamosService.getMisPrestamos(id_user, pageable));
     }
 
-    @Operation(description = "Operación encargada de eliminar un libro de favorito", method = "DELETE")
+    @Operation(description = "Operación encargada de devolver un libro", method = "DELETE")
     @DeleteMapping(value = "/{id_favorito}")
-    public ResponseEntity<BasicResponseDto> eleiminarfavorito(
+    public ResponseEntity<BasicResponseDto> devolver(
             @PathVariable(name = "id_favorito", required = true) Integer id_favorito
     ) {
 
-        prestamosService.quitarFavorito(id_favorito);
+        prestamosService.devolverLibro(id_favorito);
 
         return ResponseEntity
                 .ok()

@@ -119,7 +119,7 @@ public class PrestamosService implements IPrestamosService {
     )
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void quitarFavorito(Integer id_favorito) {
+    public void devolverLibro(Integer id_favorito) {
 
         prestamo pt = prestRepo.findById(id_favorito)
                 .orElseThrow(() -> new DatoNoExistenteEcxeption("El libro no esta como tu favorito"));
