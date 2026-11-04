@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,13 +30,13 @@ import restaurante_gratitude.demp.DTOS.Global.BasicResponseDto;
 @RequestMapping(value = "/api/v1/prestamos")
 @RestController()
 public class PrestamosController {
-    
+
     private IPrestamosService prestamosService;
-    
+
     public PrestamosController(IPrestamosService prestamosService) {
         this.prestamosService = prestamosService;
     }
-    
+
     @Operation(description = "Operación encargada de realizar un prestamo de libros en el sistema",
             method = "POST")
     @PostMapping()
@@ -43,14 +44,14 @@ public class PrestamosController {
             @Valid
             @RequestBody(required = true) PrestamoDtoreq prestamoDtoreq
     ) {
-        
+
         prestamosService.prestarLibro(prestamoDtoreq);
-        
+
         return ResponseEntity
                 .ok()
                 .body(new BasicResponseDto("Nuevo prestamo exitoso."));
     }
-    
+
     @Operation(description = "Operación encargada de mostrar lso prestamos de un usuario",
             method = "GET")
     @GetMapping(value = "/{id_user}")
@@ -58,9 +59,22 @@ public class PrestamosController {
             @PathVariable(name = "id_user", required = true) Long id_user,
             Pageable pageable
     ) {
-        
+
         return ResponseEntity
                 .ok()
                 .body(prestamosService.getMisPrestamos(id_user, pageable));
+    }
+
+    @Operation(description = "Operación encargada de eliminar un libro de favorito", method = "DELETE")
+    @DeleteMapping(value = "/{id_favorito}")
+    public ResponseEntity<BasicResponseDto> eleiminarfavorito(
+            @PathVariable(name = "id_favorito", required = true) Integer id_favorito
+    ) {
+
+        prestamosService.quitarFavorito(id_favorito);
+
+        return ResponseEntity
+                .ok()
+                .body(new BasicResponseDto("Se ha quitado de tus favoritos"));
     }
 }

@@ -23,6 +23,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -108,6 +109,25 @@ public class PrestamosService implements IPrestamosService {
         }
 
         return PageResponseUtils.CreatePageReponse(page);
+    }
+
+    @Caching(
+            evict = {
+                @CacheEvict(value = "prestamos", allEntries = true)
+
+            }
+    )
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void quitarFavorito(Integer id_favorito) {
+
+        prestamo pt = prestRepo.findById(id_favorito)
+                .orElseThrow(() -> new DatoNoExistenteEcxeption("El libro no esta como tu favorito"));
+
+        AuditableUtils.delete(pt, "prueba", "prueba");
+
+        prestRepo.save(pt);
+
     }
 
 }

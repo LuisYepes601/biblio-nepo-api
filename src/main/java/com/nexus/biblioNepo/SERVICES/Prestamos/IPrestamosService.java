@@ -18,4 +18,6 @@ public interface IPrestamosService {
     public void prestarLibro(PrestamoDtoreq prestamoDtoreq);
 
     public PageResponse<PrestasmosDtoResp> getMisPrestamos(Long id_user, Pageable pageable);
+    
+    public void quitarFavorito(Integer id_favorito);
 }
