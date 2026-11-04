@@ -66,12 +66,12 @@ public class PrestamosController {
     }
 
     @Operation(description = "Operación encargada de devolver un libro", method = "DELETE")
-    @DeleteMapping(value = "/{id_favorito}")
+    @DeleteMapping(value = "/{id_prestamo}")
     public ResponseEntity<BasicResponseDto> devolver(
-            @PathVariable(name = "id_favorito", required = true) Integer id_favorito
+            @PathVariable(name = "id_prestamo", required = true) Integer id_prestamo
     ) {
 
-        prestamosService.devolverLibro(id_favorito);
+        prestamosService.devolverLibro(id_prestamo);
 
         return ResponseEntity
                 .ok()
