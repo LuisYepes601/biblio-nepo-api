@@ -87,7 +87,8 @@ public interface prestamo_repository extends JpaRepository<prestamo, Integer> {
         u.segundoNombre,
         u.primerApellido,
         u.segundoApellido,
-        u.urlFotoPerfil
+        u.urlFotoPerfil,
+        p.isDelete
     )
            
     FROM prestamo p

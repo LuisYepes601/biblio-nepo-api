@@ -49,7 +49,9 @@ public class PrestamosAdminDtoResp {
 
     private String urlFotoPerfil;
 
-    public PrestamosAdminDtoResp(Integer id_prestamo, LocalDate fechaPrestamo, LocalDate fecha_venciimiento, LocalTime hora_prestamo, LocalTime hora_vencimiento, Long id_libro, String titulo, String subtitulo, String isbn, String editorial, LocalDate fechaPublicacion, Integer edicion, String portadaUrl, Long id_user, String nombre, String segundoNombre, String primerApellido, String segundoApellido, String urlFotoPerfil) {
+    private Boolean isDelete;
+
+    public PrestamosAdminDtoResp(Integer id_prestamo, LocalDate fechaPrestamo, LocalDate fecha_venciimiento, LocalTime hora_prestamo, LocalTime hora_vencimiento, Long id_libro, String titulo, String subtitulo, String isbn, String editorial, LocalDate fechaPublicacion, Integer edicion, String portadaUrl, Long id_user, String nombre, String segundoNombre, String primerApellido, String segundoApellido, String urlFotoPerfil, Boolean isDelete) {
         this.id_prestamo = id_prestamo;
         this.fechaPrestamo = fechaPrestamo;
         this.fecha_venciimiento = fecha_venciimiento;
@@ -69,6 +71,7 @@ public class PrestamosAdminDtoResp {
         this.primerApellido = primerApellido;
         this.segundoApellido = segundoApellido;
         this.urlFotoPerfil = urlFotoPerfil;
+        this.isDelete = isDelete;
     }
 
     public PrestamosAdminDtoResp() {
@@ -224,6 +227,14 @@ public class PrestamosAdminDtoResp {
 
     public void setUrlFotoPerfil(String urlFotoPerfil) {
         this.urlFotoPerfil = urlFotoPerfil;
+    }
+
+    public Boolean getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(Boolean isDelete) {
+        this.isDelete = isDelete;
     }
 
 }
