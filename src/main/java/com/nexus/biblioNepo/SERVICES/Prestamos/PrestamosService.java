@@ -113,7 +113,8 @@ public class PrestamosService implements IPrestamosService {
 
     @Caching(
             evict = {
-                @CacheEvict(value = "prestamos", allEntries = true)
+                @CacheEvict(value = "prestamos", allEntries = true),
+                @CacheEvict(value = "prestamos_admin", allEntries = true)
 
             }
     )
