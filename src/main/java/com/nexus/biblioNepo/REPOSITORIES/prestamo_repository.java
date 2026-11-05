@@ -93,7 +93,7 @@ public interface prestamo_repository extends JpaRepository<prestamo, Integer> {
     FROM prestamo p
     LEFT JOIN p.usuario u
     LEFT JOIN p.boock b
-    WHERE ( u.email IS NULL OR u.email = :email)
+    WHERE (:email IS NULL OR u.email = :email)
     
            
     """)
