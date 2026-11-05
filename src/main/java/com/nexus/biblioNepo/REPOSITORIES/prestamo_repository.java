@@ -4,6 +4,7 @@
  */
 package com.nexus.biblioNepo.REPOSITORIES;
 
+import com.nexus.biblioNepo.DTOS.response.Prestamos.PrestamosAdminDtoResp;
 import com.nexus.biblioNepo.DTOS.response.Prestamos.PrestasmosDtoResp;
 import com.nexus.biblioNepo.ENTYTIES.prestamo;
 import io.lettuce.core.dynamic.annotation.Param;
@@ -63,6 +64,41 @@ public interface prestamo_repository extends JpaRepository<prestamo, Integer> {
     """)
     Page<PrestasmosDtoResp> getPrestamosByIdUser(
             @Param("id_user") Long id_user,
+            Pageable pageable
+    );
+
+    @Query("""
+    SELECT DISTINCT NEW com.nexus.biblioNepo.DTOS.response.Prestamos.PrestamosAdminDtoResp(
+        p.id,
+        p.fechaPrestamo,
+        p.fecha_venciimiento,
+        p.hora_prestamo,
+        p.hora_vencimiento,
+        b.id,
+        b.titulo,
+        b.subtitulo,
+        b.isbn,
+        b.editorial,
+        b.fechaPublicacion,
+        b.edicion,
+        b.portadaUrl,
+        u.id,
+        u.nombre,
+        u.segundoNombre,
+        u.primerApellido,
+        u.segundoApellido,
+        u.urlFotoPerfil
+    )
+           
+    FROM prestamo p
+    LEFT JOIN p.usuario u
+    LEFT JOIN p.boock b
+    WHERE ( u.email IS NULL OR u.email = :email)
+    
+           
+    """)
+    Page<PrestamosAdminDtoResp> getPrestamos(
+            @Param("email") String email,
             Pageable pageable
     );
 }
